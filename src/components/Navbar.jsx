@@ -1,15 +1,13 @@
 'use client'
-
 import Link from "next/link";
 import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-
 const Navbar = () => {
   const [nav, setNav] = useState(false);
 
   const navLinks = [
     { label: "Inicio", path: "/" },
-    { label: "Registro", path: "/registro" },
+    { label: "Registro", path: "/rutas/registro" },
     { label: "Predicción", path: "/prediccion" },
     { label: "Acerca de", path: "/acerca-de" },
   ];
@@ -18,7 +16,7 @@ const Navbar = () => {
     <nav className="flex bg-amber-600 text-white">
       <div className="container flex py-4">
         <img
-          src="favicon.ico"
+          src="/favicon.ico"
           alt='logo'
           className="max-sm:ml-5 ml-10 justify-start"
         />

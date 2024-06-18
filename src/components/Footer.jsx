@@ -8,7 +8,7 @@ const Footer = () => {
                 </p>
 
                 <img
-                    src="images/facultad.jpg"
+                    src="/images/facultad.jpg"
                     alt="facultad-image"
                     width={100}
                     height={60}
