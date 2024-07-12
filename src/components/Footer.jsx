@@ -1,8 +1,10 @@
 
 const Footer = () => {
     return (
-        <footer className="flex bg-amber-600 text-white">
-            <div className="container flex py-4 justify-center">
+        <div className="flex bg-maiz text-white w-full h-[90px] bottom-0">
+           
+            <div className="container flex py-4 justify-center items-center">
+               
                 <p className="mx-10">
                     © {new Date().getFullYear()} Universidad Central de Las Villas, Facultad de Ciencias Agropecuarias.
                 </p>
@@ -16,7 +18,7 @@ const Footer = () => {
                 />
 
             </div>
-        </footer>
+        </div>
 
     );
 };

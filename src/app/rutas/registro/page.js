@@ -1,128 +1,46 @@
 'use client'
 import React, { useState } from 'react';
+import RegistryTable from '@/components/RegistryTable';
+import NewObservationForm from '@/components/NewObservationForm';
+import TableSelector from '@/components/TableSelector';
+import InfoCard from '@/components/InfoCard';
+import PageHeader from "@/components/PageHeader";
 
 const registro = () => {
-    const [showForm, setShowForm] = useState(false);
-
-    const handleAddObservation = () => {
-        setShowForm(!showForm);
-    };
-
     return (
-        <main className="relative">
+        <main className="relative overflow-x-clip scroll-mx-0">
 
-            <section className="flex flex-col container mx-auto px-4 py-10 text-amber-600">
+            <PageHeader
+                title={<>Registro histórico de variables</>}
+                content={<>Almacene las mediciones de variables meteorológicas y estado de las plantas en los
+                    terrenos donde se lleva a cabo el cultivo de maíz para la investigación.</>
+                }
+            />
 
-                <h1 className="text-5xl text-center w-full mb-8">
-                    Registro histórico de variables
-                </h1>
+            <section className="flex flex-col mx-10 px-4 text-maiz">
 
-                <div className="w-full overflow-x-auto">
-                    <table className="w-full border-collapse border border-amber-600">
-                        <thead>
-                            <tr>
-                                <th className="border border-amber-600 p-2">Fecha</th>
-                                <th className="border border-amber-600 p-2">Día o noche</th>
-                                <th className="border border-amber-600 p-2">Lugar de cultivo</th>
-                                <th className="border border-amber-600 p-2">Variedad</th>
-                                <th className="border border-amber-600 p-2">Fase fenológica</th>
-                                <th className="border border-amber-600 p-2">Humedad relativa</th>
-                                <th className="border border-amber-600 p-2">Temperatura</th>
-                                <th className="border border-amber-600 p-2">Precipitación del día anterior</th>
-                                <th className="border border-amber-600 p-2">Presencia del hongo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {/* Empty rows */}
-                            {Array.from({ length: 10 }).map((_, index) => (
-                                <tr key={index}>
-                                    <td className="border border-amber-600 p-2"></td>
-                                    <td className="border border-amber-600 p-2"></td>
-                                    <td className="border border-amber-600 p-2"></td>
-                                    <td className="border border-amber-600 p-2"></td>
-                                    <td className="border border-amber-600 p-2"></td>
-                                    <td className="border border-amber-600 p-2"></td>
-                                    <td className="border border-amber-600 p-2"></td>
-                                    <td className="border border-amber-600 p-2"></td>
-                                    <td className="border border-amber-600 p-2"></td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                <div className="container flex flex-col">
+
+                    <TableSelector />
+
+                    <RegistryTable />
+
+                    <NewObservationForm />
+
                 </div>
 
-                <button
-                    className="bg-amber-600 text-white px-4 py-2 mt-4 rounded"
-                    onClick={handleAddObservation}
-                >
-                    Registrar observación
-                </button>
+            </section>
 
-                {showForm && (
-                    <form className="mt-4">
+            <section className="px-10 py-10">
 
-                        <input
-                            type="text"
-                            placeholder="Fecha"
-                            className="border border-amber-600 p-2 w-full"
-                        />
+                <hr className="border border-maiz-dark my-5 " />
 
-                        <input
-                            type="text"
-                            placeholder="Día o noche"
-                            className="border border-amber-600 p-2 w-full"
-                        />
+                <InfoCard
+                    imagesrc="/images/tar_spot2.png"
+                    title="Predicción de aparición de la enfermedad"
+                    text='Sobre la base de la experiencia de los datos históricos guardados en el sistema, y a partir de las diez últimas observaciones, el modelo de aprendizaje de máquina estima que la probabilidad de que la enfermedad aparezca en alguna de las próximas tres observaciones es del __%.'
 
-                        <input
-                            type="text"
-                            placeholder="Lugar de cultivo"
-                            className="border border-amber-600 p-2 w-full"
-                        />
-
-                        <input
-                            type="text"
-                            placeholder="Variedad"
-                            className="border border-amber-600 p-2 w-full"
-                        />
-
-                        <input
-                            type="text"
-                            placeholder="Fase fenológica"
-                            className="border border-amber-600 p-2 w-full"
-                        />
-
-                        <input
-                            type="text"
-                            placeholder="Humedad relativa"
-                            className="border border-amber-600 p-2 w-full"
-                        />
-
-                        <input
-                            type="text"
-                            placeholder="Temperatura"
-                            className="border border-amber-600 p-2 w-full"
-                        />
-
-                        <input
-                            type="text"
-                            placeholder="Precipitación del día anterior"
-                            className="border border-amber-600 p-2 w-full"
-                        />
-
-                        <input
-                            type="text"
-                            placeholder="Presencia del hongo"
-                            className="border border-amber-600 p-2 w-full"
-                        />
-
-                        <button
-                            type="submit"
-                            className="bg-amber-600 text-white px-4 py-2 mt-4 rounded"
-                        >
-                            Guardar
-                        </button>
-                    </form>
-                )}
+                />
 
             </section>
         </main>

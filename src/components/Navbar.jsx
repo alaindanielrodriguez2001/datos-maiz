@@ -1,46 +1,56 @@
 'use client'
 import Link from "next/link";
 import React, { useState } from "react";
+import CustomButton from "./CustomButton";
 import { FaBars, FaTimes } from "react-icons/fa";
+
+
 const Navbar = () => {
   const [nav, setNav] = useState(false);
 
   const navLinks = [
     { label: "Inicio", path: "/" },
-    { label: "Registro", path: "/rutas/registro" },
-    { label: "Predicción", path: "/prediccion" },
-    { label: "Acerca de", path: "/acerca-de" },
+    { label: "Datos", path: "/rutas/registro" },
+    { label: "Anotaciones", path: "/rutas/anotaciones" },
+    { label: "Acerca de", path: "/rutas/acerca-de" },
   ];
 
   return (
-    <nav className="flex bg-amber-600 text-white">
-      <div className="container flex py-4">
-        <img
-          src="/favicon.ico"
-          alt='logo'
-          className="max-sm:ml-5 ml-10 justify-start"
-        />
-        <div className="flex items-center">
+    <nav className={`flex top-0 fixed ${nav ? "h-[250px] md:h-[50px]" : "h-[50px]"} bg-maiz w-full text-white z-50 items-center justify-start`}>
+      <img
+        src="/favicon.ico"
+        alt="logo"
+        className="max-sm:ml-5 ml-10 h-[30px] w-[30px]"
+      />
 
-          <button
+      <div className="flex items-center justify-start ml- w-full">
+        <div className="mx-5">
+
+          <CustomButton
             onClick={() => setNav(!nav)}
-            className="text-white ml-10 focus:outline-none hover:outline-none sm:hidden"
-          >
-            {nav ? <FaTimes /> : <FaBars />}
-          </button>
+            customStyle="text-white ml-5 md:hidden"
+            content={nav ? <FaTimes /> : <FaBars />}
+          />
 
-          <ul
-            className={`sm:flex ${nav ? "block" : "hidden"} ml-10 space-x-4 mt-4 md:mt-0`}
-          >
-            {navLinks.map((link) => (
-              <li key={link.path}>
-                <Link href={link.path}>{link.label}</Link>
-              </li>
-            ))}
-          </ul>
         </div>
+
+        <ul className={`flex flex-row ${nav ? "max-md:flex-col max-md:space-y-4" : "max-md:hidden"} justify-between items-center w-full mx-10`}>
+          {navLinks.map((link) => (
+            <li key={link.path}>
+              <Link href={link.path}>
+                
+                <CustomButton
+                  customStyle="w-[150px]"
+                  content={link.label}
+                />
+
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </nav>
+
   );
 };
 
