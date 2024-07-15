@@ -10,13 +10,13 @@ const Navbar = () => {
 
   const navLinks = [
     { label: "Inicio", path: "/" },
-    { label: "Datos", path: "/rutas/registro" },
-    { label: "Anotaciones", path: "/rutas/anotaciones" },
+    { label: "Datos", path: "/rutas/datos" },
+    { label: "Campos de cultivo", path: "/rutas/campos" },
     { label: "Acerca de", path: "/rutas/acerca-de" },
   ];
 
   return (
-    <nav className={`flex top-0 fixed ${nav ? "h-[250px] md:h-[50px]" : "h-[50px]"} bg-maiz w-full text-white z-50 items-center justify-start`}>
+    <nav className={`flex top-0 fixed ${nav ? "h-[250px] md:h-[50px]" : "h-[50px]"} bg-maiz w-full text-white z-50 items-center justify-start border border-b-white`}>
       <img
         src="/favicon.ico"
         alt="logo"
@@ -34,13 +34,13 @@ const Navbar = () => {
 
         </div>
 
-        <ul className={`flex flex-row ${nav ? "max-md:flex-col max-md:space-y-4" : "max-md:hidden"} justify-between items-center w-full mx-10`}>
+        <ul className={`flex flex-row ${nav ? "max-md:flex-col max-md:space-y-4" : "max-md:hidden"} justify-start space-x-3 md:space-x-5 items-center w-full mx-10`}>
           {navLinks.map((link) => (
             <li key={link.path}>
               <Link href={link.path}>
                 
                 <CustomButton
-                  customStyle="w-[150px]"
+                  customStyle="w-auto"
                   content={link.label}
                 />
 

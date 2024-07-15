@@ -5,7 +5,7 @@ import InfoCard from "./InfoCard";
 
 const Hero = () => {
     return (
-        <>
+        <div className="flex flex-col justify-center px-10">
             <PageHeader
                 imagesrc="/images/logo.png"
                 title={<>Datamaíz</>}
@@ -16,9 +16,9 @@ const Hero = () => {
                 }
             />
 
-            <hr className="border border-maiz-dark my-5 " />
+            <hr className="border border-maiz-dark my-5 px-4" />
 
-            <div className="my-12 space-y-6">
+            <div className="my-12 space-y-6 px-4">
                 <h1 className="text-7xl text-center text-maiz-dark mb-10">
                     Funcionalidades del software
                 </h1>
@@ -43,9 +43,9 @@ const Hero = () => {
                 />
 
                 <InfoCard
-                    imagesrc="/images/report.jpg"
-                    title="Anotaciones"
-                    text={<>Redacte, guarde y consulte anotaciones sobre los cultivos, ya se trate de reportes de su estado, incidentes, observaciones, descubrimientos, o cualquier otro tipo de documento de interés para la investigación.</>}
+                    imagesrc="/images/campos.jpg"
+                    title="Campos de cultivo"
+                    text={<>Guarde y consulte la información sobre los campos de cultivo vinculados al estudio.</>}
                 />
 
 
@@ -53,7 +53,7 @@ const Hero = () => {
             </div>
 
 
-        </>
+        </div>
 
     );
 };
