@@ -37,7 +37,9 @@ const NewFieldForm = () => {
         try {
             const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/campos/`, formData);
             console.log('Campo created:', response.data);
-            // Optionally, reset the form or provide feedback to the user
+            setFormData(initialFormData); 
+            setShowForm(false);
+            
         } catch (error) {
             console.error('Error creating campo:', error);
         }
@@ -151,4 +153,19 @@ const NewFieldForm = () => {
     );
 };
 
+const initialFormData = {
+    nombre_del_campo: '',
+    municipio: '',
+    forma_productiva: '',
+    cultivar: '',
+    tipo_de_suelo: '',
+    sistema_de_riego: '',
+    altura_snm: '',
+    metodo_de_siembra: '',
+    tipo_de_fertilizacion: '',
+    tipo_de_labor_cultural: '',
+    distancia_de_siembra: '',
+};
+
 export default NewFieldForm;
+
