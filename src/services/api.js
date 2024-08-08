@@ -21,3 +21,23 @@ export const fetchCampos = async () => {
         throw error;
     }
 };
+
+export const fetchCampoNames = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/campos/`);
+        return response.data.map(campo => campo.nombre_del_campo);
+    } catch (error) {
+        console.error('Error fetching campo names:', error);
+        throw error;
+    }
+};
+
+export const field_name = async (pk) => {
+    try {
+        const response = await axios.get(`${API_URL}/campos/${pk}`);
+        return response.nombre_del_campo;
+    } catch (error) {
+        console.error('Error fetching campo names:', error);
+        throw error;
+    }
+}

@@ -35,7 +35,7 @@ const TableSelector = () => {
             <div className="flex left-0 justify-between mt-7 mb-3 mx-10 space-x-5">
                 <CustomButton
                     onClick={handleLatestClick}
-                    content="Siete últimos registros"
+                    content="Diez últimos registros"
                     customStyle="w-full"
                 />
 

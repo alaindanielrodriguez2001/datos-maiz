@@ -1,6 +1,7 @@
 import React from 'react'
 import PageHeader from '@/components/PageHeader'
 import FieldsTable from '@/components/FieldsTable'
+import NewFieldForm from '@/components/NewFieldForm'
 
 const page = () => {
     return (
@@ -14,6 +15,8 @@ const page = () => {
                 />
 
                 <FieldsTable className="px-4"/>
+
+                <NewFieldForm/>
 
             </main>
         </div>

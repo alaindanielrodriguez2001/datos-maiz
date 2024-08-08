@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react';
-import { fetchLastObservaciones } from '../services/api';
+import { fetchLastObservaciones, field_name } from '../services/api';
 
 const RegistryTable = () => {
     const [observaciones, setObservaciones] = useState([]);
@@ -40,7 +40,7 @@ const RegistryTable = () => {
                 <tbody>
                     {observaciones.map((observacion) => (
                         <tr key={observacion.id}>
-                            <td className="border border-maiz p-2">{observacion.campo.nombre_del_campo}</td>
+                            <td className="border border-maiz p-2">{observacion.nombre_del_campo}</td>
                             <td className="border border-maiz p-2">{observacion.fecha}</td>
                             <td className="border border-maiz p-2">{observacion.fase_fenologica}</td>
                             <td className="border border-maiz p-2">{observacion.humedad_maxima}</td>
