@@ -1,8 +1,6 @@
 'use client'
-import React, { useState } from 'react';
-import RegistryTable from '@/components/RegistryTable';
-import NewObservationForm from '@/components/NewObservationForm';
-import TableSelector from '@/components/TableSelector';
+import MainComponent from '@/components/MainComponent';
+import InputForm from '@/components/InputForm'
 import InfoCard from '@/components/InfoCard';
 import PageHeader from "@/components/PageHeader";
 import Statistics from '@/components/Statistics';
@@ -12,7 +10,7 @@ const registro = () => {
         <main className="flex flex-col overflow-x-clip scroll-mx-0 px-10">
 
             <PageHeader
-                title={<>Registro histórico de variables</>}
+                title={<>Registro de observaciones</>}
                 content={<>Almacene las mediciones de variables meteorológicas y estado de las plantas en los
                     terrenos donde se lleva a cabo el cultivo de maíz para la investigación, y consulte sus estadísticas
                     y el pronóstico sobre la aparición y desarrollo del hongo.</>
@@ -21,9 +19,26 @@ const registro = () => {
 
             <div className="flex flex-col px-4 text-maiz">
                 <div className="container flex flex-col">
-                    <TableSelector />
-                    <RegistryTable />
-                    <NewObservationForm />
+                    <MainComponent/>
+
+                    <InputForm
+                        formFields={[
+                            { name: 'campo', type: 'select', placeholder: 'Seleccione un campo' },
+                            { name: 'fecha', type: 'date', placeholder: 'Fecha' },
+                            { name: 'fase_fenologica', type: 'number', placeholder: 'Fase fenológica' },
+                            { name: 'humedad_maxima', type: 'number', placeholder: 'Humedad relativa máxima' },
+                            { name: 'humedad_minima', type: 'number', placeholder: 'Humedad relativa mínima' },
+                            { name: 'humedad_media', type: 'number', placeholder: 'Humedad relativa media' },
+                            { name: 'temperatura_maxima', type: 'number', placeholder: 'Temperatura máxima' },
+                            { name: 'temperatura_minima', type: 'number', placeholder: 'Temperatura mínima' },
+                            { name: 'temperatura_media', type: 'number', placeholder: 'Temperatura media' },
+                            { name: 'precipitacion', type: 'number', placeholder: 'Precipitación' },
+                            { name: 'presencia_del_hongo', type: 'checkbox', placeholder: 'Presencia del hongo' },
+                        ]}
+                        fetchUrl={`${process.env.NEXT_PUBLIC_API_URL}/campos/`}
+                        postUrl={`${process.env.NEXT_PUBLIC_API_URL}/observaciones/`}
+                        buttonText="Registrar nueva observación"
+                    />
                 </div>
             </div>
 
@@ -52,12 +67,8 @@ const registro = () => {
                     <Statistics />
                 </div>
             </div>
-
-
-
         </main>
     )
 }
-
 export default registro;
 
