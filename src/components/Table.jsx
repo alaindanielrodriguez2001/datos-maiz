@@ -7,11 +7,16 @@ import CustomButton from './CustomButton';
 const Table = ({ columns, formattedColumns, fetchUrl, deleteUrl, campo }) => {
     const [rows, setRows] = useState([]);
     const [selectedId, setSelectedId] = useState(null);
+    const [url, setUrl] = useState(fetchUrl);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const url = campo === "Todos" ? fetchUrl : `${fetchUrl}?campo=${campo}`;
+                if(campo){
+                    const campoUrl = campo === "Todos" ? fetchUrl : `${fetchUrl}?campo=${campo}`;
+                    setUrl(campoUrl)
+                }
+                
                 const response = await axios.get(url);
                 setRows(response.data);
             } catch (error) {
@@ -19,6 +24,8 @@ const Table = ({ columns, formattedColumns, fetchUrl, deleteUrl, campo }) => {
             }
         };
         fetchData();
+
+        
     }, [fetchUrl, campo]);
 
     const handleRowClick = (id) => {

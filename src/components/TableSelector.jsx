@@ -36,7 +36,7 @@ const TableSelector = ({ onCampoChange }) => {
     };
 
     return (
-        <div className="mx-10">
+        <div className="mx-10 rounded-xl">
             <p className="w-full text-lg text-maiz text-center">
                 Seleccione el campo de cultivo
             </p>

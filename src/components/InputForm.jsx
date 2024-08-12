@@ -38,11 +38,9 @@ const InputForm = ({ formFields, fetchUrl, postUrl, buttonText }) => {
 
     const handleDateChange = (e) => {
         const { name, value } = e.target;
-        const date = new Date(value);
-        const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
         setFormData({
             ...formData,
-            [name]: formattedDate,
+            [name]: value, // Use the value directly without reformatting
         });
     };
 
@@ -54,7 +52,7 @@ const InputForm = ({ formFields, fetchUrl, postUrl, buttonText }) => {
             setFormData(formFields.reduce((acc, field) => ({ ...acc, [field.name]: field.defaultValue || '' }), {}));
             setShowForm(false);
         } catch (error) {
-            console.error('Error creating data:', error);
+            console.error('Error creating data:', error.response.data);
         }
     };
 
@@ -77,7 +75,7 @@ const InputForm = ({ formFields, fetchUrl, postUrl, buttonText }) => {
                                 >
                                     <option value="">{field.placeholder}</option>
                                     {campoNames.map((campo) => (
-                                        <option key={campo.id} value={campo.nombre_del_campo}>{campo.nombre_del_campo}</option>
+                                        <option key={campo.id} value={campo.id}>{campo.nombre_del_campo}</option>
                                     ))}
                                 </select>
                             ) : field.type === 'checkbox' ? (
