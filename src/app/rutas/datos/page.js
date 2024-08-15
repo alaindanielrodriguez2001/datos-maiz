@@ -3,7 +3,6 @@ import MainComponent from '@/components/MainComponent';
 import InputForm from '@/components/InputForm'
 import InfoCard from '@/components/InfoCard';
 import PageHeader from "@/components/PageHeader";
-import Statistics from '@/components/Statistics';
 
 const registro = () => {
     return (
@@ -61,12 +60,6 @@ const registro = () => {
                 />
             </div>
 
-            <div className="flex flex-col px-4 text-maiz mb-10">
-                <div className="container flex flex-col">
-                    <hr className="border border-maiz-dark my-5 " />
-                    <Statistics />
-                </div>
-            </div>
         </main>
     )
 }

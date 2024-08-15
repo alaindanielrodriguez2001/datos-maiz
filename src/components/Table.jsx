@@ -1,32 +1,9 @@
 'use client'
-
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import CustomButton from './CustomButton';
 
-const Table = ({ columns, formattedColumns, fetchUrl, deleteUrl, campo }) => {
-    const [rows, setRows] = useState([]);
+const Table = ({ columns, formattedColumns, data, deleteUrl }) => {
     const [selectedId, setSelectedId] = useState(null);
-    const [url, setUrl] = useState(fetchUrl);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                if(campo){
-                    const campoUrl = campo === "Todos" ? fetchUrl : `${fetchUrl}?campo=${campo}`;
-                    setUrl(campoUrl)
-                }
-                
-                const response = await axios.get(url);
-                setRows(response.data);
-            } catch (error) {
-                console.error('Failed to fetch data:', error);
-            }
-        };
-        fetchData();
-
-        
-    }, [fetchUrl, campo]);
 
     const handleRowClick = (id) => {
         setSelectedId(id);
@@ -59,7 +36,7 @@ const Table = ({ columns, formattedColumns, fetchUrl, deleteUrl, campo }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {rows.map((row) => (
+                    {data.map((row) => (
                         <tr
                             key={row.id}
                             onClick={() => handleRowClick(row.id)}
