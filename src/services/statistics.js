@@ -7,7 +7,6 @@ export const computeStatistics = (data) => {
     };
 
     const numericFields = ['fase_fenologica', 'humedad_maxima', 'humedad_minima', 'humedad_media', 'temperatura_maxima', 'temperatura_minima', 'temperatura_media', 'precipitacion'];
-    const booleanFields = ['presencia_del_hongo'];
 
     numericFields.forEach(field => {
         const values = data.map(item => item[field]);
@@ -15,11 +14,6 @@ export const computeStatistics = (data) => {
         stats.maximo[field] = Math.max(...values);
         stats.minimo[field] = Math.min(...values);
         stats.desviacionEstandar[field] = standardDeviation(values);
-    });
-
-    booleanFields.forEach(field => {
-        const values = data.map(item => item[field]);
-        stats.promedio[field] = mode(values);
     });
 
     return [

@@ -50,6 +50,7 @@ const InputForm = ({ formFields, fetchUrl, postUrl, buttonText }) => {
             const response = await axios.post(postUrl, formData);
             console.log('Data created:', response.data);
             setFormData(formFields.reduce((acc, field) => ({ ...acc, [field.name]: field.defaultValue || '' }), {}));
+            window.alert("La nueva información fue guardada.")
             setShowForm(false);
         } catch (error) {
             console.error('Error creating data:', error.response.data);

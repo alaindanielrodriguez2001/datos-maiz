@@ -4,7 +4,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const fetchLastObservaciones = async () => {
     try {
-        const response = await axios.get(`${API_URL}/last_observaciones/`);
+        const response = await axios.get(`${API_URL}/observaciones/`);
         return response.data;
     } catch (error) {
         console.error('Error fetching last observaciones:', error);
@@ -42,12 +42,3 @@ export const field_name = async (pk) => {
     }
 }
 
-export const field_pk = async (field_name) => {
-    try {
-        const response = await axios.get(`${API_URL}/campos/${pk}`);
-        return response.nombre_del_campo;
-    } catch (error) {
-        console.error('Error fetching campo names:', error);
-        throw error;
-    }
-}

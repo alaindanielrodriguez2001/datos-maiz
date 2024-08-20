@@ -1,7 +1,9 @@
+// app/layout.js or app/layout.tsx
+import SessionProviderWrapper from "@/components/SessionProviderWrapper";
 import Navbar from "@/components/Navbar";
 import "./globals.css";
-import "@/components/Navbar"
-import "@/components/Footer"
+import "@/components/Navbar";
+import "@/components/Footer";
 
 export const metadata = {
   title: "Datamaíz",
@@ -11,11 +13,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
-      <body>        
-        <Navbar className="mb-6"/>
-
+      <body>
+        <SessionProviderWrapper>
+          <Navbar className="mb-6" />
           {children}
-        
+        </SessionProviderWrapper>
       </body>
     </html>
   );
