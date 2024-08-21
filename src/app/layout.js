@@ -1,4 +1,3 @@
-// app/layout.js or app/layout.tsx
 import SessionProviderWrapper from "@/components/SessionProviderWrapper";
 import Navbar from "@/components/Navbar";
 import "./globals.css";

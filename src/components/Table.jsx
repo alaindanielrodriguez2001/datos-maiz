@@ -1,9 +1,12 @@
 'use client'
+import { useSession } from 'next-auth/react';
 import { useState } from 'react';
+import axios from 'axios';
 import CustomButton from './CustomButton';
 
 const Table = ({ columns, formattedColumns, data, deleteUrl }) => {
     const [selectedId, setSelectedId] = useState(null);
+    const { data: session, status } = useSession();
 
     const handleRowClick = (id) => {
         setSelectedId(id);
@@ -14,12 +17,17 @@ const Table = ({ columns, formattedColumns, data, deleteUrl }) => {
             const confirmDelete = window.confirm('¿Estás seguro de que deseas eliminar esta fila?');
             if (confirmDelete) {
                 try {
-                    await axios.delete(`${deleteUrl}/${selectedId}/`);
+                    await axios.delete(`${deleteUrl}/${selectedId}`, {
+                        headers: {
+                            Authorization: `Bearer ${session.accessToken}`,
+                        },
+                    });
                     setRows(rows.filter(row => row.id !== selectedId));
                     setSelectedId(null);
+                    window.alert("La fila fue eliminada.");
                 } catch (error) {
-                    console.error('Failed to delete row:', error);
-                    alert('No se pudo eliminar la fila. Por favor, inténtalo de nuevo.');
+                    window.alert("Usted necesita autenticarse para modificar la información guardada en el sistema");
+                    console.log(error)
                 }
             }
         }

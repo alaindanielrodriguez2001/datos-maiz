@@ -9,7 +9,6 @@ const Navbar = () => {
   const [nav, setNav] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const { data: session, status } = useSession();
-  const loading = status === "loading";
 
   const navLinks = [
     { label: "Inicio", path: "/" },
@@ -35,15 +34,13 @@ const Navbar = () => {
     });
     if (!result.error) {
       setShowDropdown(false);
+      window.alert("Usted ha iniciado su sesión exitosamente.")
+      console.log(session)
     } else {
-      // Handle error (e.g., show an error message)
       console.error('Authentication error:', result.error);
+      window.alert("No se pudo autenticar. Compruebe que las credenciales sean correctas.")
     }
   };
-
-  if (status === 'loading') {
-    return <p>Loading...</p>;
-  }
 
   if (session?.error === 'RefreshAccessTokenError') {
     signIn();
@@ -77,27 +74,33 @@ const Navbar = () => {
           ))}
           <li>
             <CustomButton
-              customStyle="w-auto"
-              content={session ? session.user.name : "Autenticarse"}
+              customStyle="w-full"
+              content={session ? "Cerrar sesión" : "Autenticarse"}
               onClick={handleAuthClick}
             />
             {showDropdown && !session && (
-              <div className="absolute bg-white text-black p-4 mt-2 rounded shadow-lg">
-                <form onSubmit={handleSignIn}>
-                  <div>
-                    <label htmlFor="username" aria-label="Username">Username</label>
-                    <input type="text" id="username" name="username" required aria-label="Username" />
+              <div className="absolute bg-white p-4 mt-2 rounded shadow-lg">
+                <form onSubmit={handleSignIn} className="space-y-2">
+                  <div className="border border-maiz p-2 w-full rounded-xl text-gray-400">
+                    <label htmlFor="username" aria-label="Username">Nombre de usuario</label>
+                    <input type="text" id="username" name="username" required aria-label="Username" className="ml-4 px-2" />
                   </div>
-                  <div>
-                    <label htmlFor="password" aria-label="Password">Password</label>
-                    <input type="password" id="password" name="password" required aria-label="Password" />
+                  <div className="border border-maiz p-2 w-full rounded-xl text-gray-400">
+                    <label htmlFor="password" aria-label="Password">Contraseña</label>
+                    <input type="password" id="password" name="password" required aria-label="Password" className="ml-4 px-2" />
                   </div>
-                  <button type="submit" aria-label="Login">Login</button>
+
+                  <CustomButton
+                    customStyle="w-full mt-3"
+                    content="Autenticarse"
+                    type="submit"
+                  />
                 </form>
               </div>
             )}
           </li>
         </ul>
+
       </div>
     </nav>
   );

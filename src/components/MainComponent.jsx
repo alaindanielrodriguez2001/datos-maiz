@@ -36,7 +36,7 @@ const MainComponent = () => {
         columns={['nombre_del_campo', 'fecha', 'fase_fenologica', 'humedad_maxima', 'humedad_minima', 'humedad_media', 'temperatura_maxima', 'temperatura_minima', 'temperatura_media', 'precipitacion', 'presencia_del_hongo']}
         formattedColumns={['Campo', 'Fecha', 'Fase fenológica', 'Humedad máxima', 'Humedad mínima', 'Humedad media', 'Temperatura máxima', 'Temperatura mínima', 'Temperatura media', 'Precipitación', 'Presencia del hongo']}
         data={data}
-        deleteUrl={`${process.env.NEXT_PUBLIC_API_URL}/observaciones`}
+        deleteUrl={`${process.env.NEXT_PUBLIC_API_URL}/observacion`}
       />
       <div className="flex flex-col px-4 text-maiz mb-10">
         <div className="container flex flex-col">

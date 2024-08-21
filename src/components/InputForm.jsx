@@ -1,4 +1,5 @@
 'use client'
+import { useSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import CustomButton from './CustomButton';
@@ -9,6 +10,7 @@ const InputForm = ({ formFields, fetchUrl, postUrl, buttonText }) => {
         formFields.reduce((acc, field) => ({ ...acc, [field.name]: field.defaultValue || '' }), {})
     );
     const [campoNames, setCampoNames] = useState([]);
+    const { data: session, status } = useSession();
 
     useEffect(() => {
         if (fetchUrl) {
@@ -40,20 +42,25 @@ const InputForm = ({ formFields, fetchUrl, postUrl, buttonText }) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
-            [name]: value, // Use the value directly without reformatting
+            [name]: value, 
         });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         try {
-            const response = await axios.post(postUrl, formData);
+            const response = await axios.post(postUrl, formData, {
+                headers: {
+                    Authorization: `Bearer ${session.accessToken}`,
+                },
+            });
             console.log('Data created:', response.data);
             setFormData(formFields.reduce((acc, field) => ({ ...acc, [field.name]: field.defaultValue || '' }), {}));
-            window.alert("La nueva información fue guardada.")
             setShowForm(false);
+            window.alert("La nueva información fue guardada.");
         } catch (error) {
-            console.error('Error creating data:', error.response.data);
+                window.alert("Usted necesita autenticarse para modificar la información guardada en el sistema");
         }
     };
 
@@ -67,7 +74,7 @@ const InputForm = ({ formFields, fetchUrl, postUrl, buttonText }) => {
             {showForm && (
                 <form className="space-y-3 mb-4" onSubmit={handleSubmit}>
                     {formFields.map((field) => (
-                        <div key={field.name} className="border border-maiz p-2 w-full text-gray-400">
+                        <div key={field.name} className="border border-maiz p-2 w-full rounded-xl text-gray-400">
                             {field.type === 'select' ? (
                                 <select
                                     name={field.name}

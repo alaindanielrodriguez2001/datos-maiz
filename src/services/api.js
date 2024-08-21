@@ -32,13 +32,5 @@ export const fetchCampoNames = async () => {
     }
 };
 
-export const field_name = async (pk) => {
-    try {
-        const response = await axios.get(`${API_URL}/campos/${pk}`);
-        return response.nombre_del_campo;
-    } catch (error) {
-        console.error('Error fetching campo names:', error);
-        throw error;
-    }
-}
+
 

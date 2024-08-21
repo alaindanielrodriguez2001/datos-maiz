@@ -2,10 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { fetchCampos } from '../services/api';
 import CustomButton from "./CustomButton";
-import Filters from "./Filters";
 
 const TableSelector = ({ onCampoChange, onFetchData }) => {
-  const [showFilterMenu, setShowFilterMenu] = useState(false);
   const [camposData, setCamposData] = useState([]);
   const [selectedCampo, setSelectedCampo] = useState(0);
 
@@ -25,16 +23,11 @@ const TableSelector = ({ onCampoChange, onFetchData }) => {
     const selectedCampoId = e.target.value === "0" ? 0 : parseInt(e.target.value, 10);
     setSelectedCampo(selectedCampoId);
     onCampoChange(selectedCampoId);
-    onFetchData(selectedCampoId); // Fetch data automatically when campo changes
+    onFetchData(selectedCampoId); 
   };
 
   const handleLatestClick = () => {
     console.log("Latest instances");
-    setShowFilterMenu(false);
-  };
-
-  const handleFilterClick = () => {
-    setShowFilterMenu(!showFilterMenu);
   };
 
   return (
@@ -46,7 +39,7 @@ const TableSelector = ({ onCampoChange, onFetchData }) => {
         <select
           value={selectedCampo}
           onChange={handleCampoChange}
-          className="w-full p-2 border border-maiz"
+          className="w-full p-2 border border-maiz rounded-xl"
         >
           <option value={0}>Todos</option>
           {camposData.map((campo) => (
@@ -61,16 +54,11 @@ const TableSelector = ({ onCampoChange, onFetchData }) => {
           customStyle="w-full"
         />
         <CustomButton
-          onClick={handleFilterClick}
           content="Seleccionar período"
           customStyle="w-full"
         />
       </div>
-      {showFilterMenu && (
-        <>
-          <Filters />
-        </>
-      )}
+
     </div>
   );
 };

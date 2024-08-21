@@ -17,12 +17,12 @@ const Statistics = ({ data }) => {
             <h2 className="text-maiz text-4xl text-center">
                 Resumen estadístico de los registros filtrados
             </h2>
-            <div className="w-full overflow-x-auto my-7">
-                <Table
-                    columns={['keyword', 'fase_fenologica', 'humedad_maxima', 'humedad_minima', 'humedad_media', 'temperatura_maxima', 'temperatura_minima', 'temperatura_media', 'precipitacion']}
-                    formattedColumns={['', 'Fase fenológica', 'Humedad máxima', 'Humedad mínima', 'Humedad media', 'Temperatura máxima', 'Temperatura mínima', 'Temperatura media', 'Precipitación']}
-                    data={statistics}
-                />
+            <div className="w-full overflow-x-auto my-7">                
+                    <Table
+                        columns={['keyword', 'fase_fenologica', 'humedad_maxima', 'humedad_minima', 'humedad_media', 'temperatura_maxima', 'temperatura_minima', 'temperatura_media', 'precipitacion']}
+                        formattedColumns={['', 'Fase fenológica', 'Humedad máxima', 'Humedad mínima', 'Humedad media', 'Temperatura máxima', 'Temperatura mínima', 'Temperatura media', 'Precipitación']}
+                        data={statistics}
+                    />               
             </div>
         </div>
     );
