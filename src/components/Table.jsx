@@ -4,7 +4,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import CustomButton from './CustomButton';
 
-const Table = ({ columns, formattedColumns, data, deleteUrl }) => {
+const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData }) => {
     const [selectedId, setSelectedId] = useState(null);
     const { data: session, status } = useSession();
 
@@ -22,16 +22,17 @@ const Table = ({ columns, formattedColumns, data, deleteUrl }) => {
                             Authorization: `Bearer ${session.accessToken}`,
                         },
                     });
-                    setRows(rows.filter(row => row.id !== selectedId));
+                    onFetchData();
                     setSelectedId(null);
                     window.alert("La fila fue eliminada.");
                 } catch (error) {
                     window.alert("Usted necesita autenticarse para modificar la información guardada en el sistema");
-                    console.log(error)
+                    console.log(error);
                 }
             }
         }
     };
+
 
     return (
         <div className="w-full overflow-x-auto mt-7 mb-2">

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import CustomButton from './CustomButton';
 
-const InputForm = ({ formFields, fetchUrl, postUrl, buttonText }) => {
+const InputForm = ({ formFields, fetchUrl, postUrl, buttonText, onFormSubmit }) => {
     const [showForm, setShowForm] = useState(false);
     const [formData, setFormData] = useState(
         formFields.reduce((acc, field) => ({ ...acc, [field.name]: field.defaultValue || '' }), {})
@@ -58,6 +58,7 @@ const InputForm = ({ formFields, fetchUrl, postUrl, buttonText }) => {
             console.log('Data created:', response.data);
             setFormData(formFields.reduce((acc, field) => ({ ...acc, [field.name]: field.defaultValue || '' }), {}));
             setShowForm(false);
+            onFormSubmit();
             window.alert("La nueva información fue guardada.");
         } catch (error) {
                 window.alert("Usted necesita autenticarse para modificar la información guardada en el sistema");

@@ -1,6 +1,5 @@
 'use client'
 import MainComponent from '@/components/MainComponent';
-import InputForm from '@/components/InputForm'
 import InfoCard from '@/components/InfoCard';
 import PageHeader from "@/components/PageHeader";
 
@@ -18,26 +17,7 @@ const registro = () => {
 
             <div className="flex flex-col px-4 text-maiz">
                 <div className="container flex flex-col">
-                    <MainComponent/>
-
-                    <InputForm
-                        formFields={[
-                            { name: 'campo', type: 'select', placeholder: 'Seleccione un campo' },
-                            { name: 'fecha', type: 'date', placeholder: 'Fecha' },
-                            { name: 'fase_fenologica', type: 'number', placeholder: 'Fase fenológica' },
-                            { name: 'humedad_maxima', type: 'number', placeholder: 'Humedad relativa máxima' },
-                            { name: 'humedad_minima', type: 'number', placeholder: 'Humedad relativa mínima' },
-                            { name: 'humedad_media', type: 'number', placeholder: 'Humedad relativa media' },
-                            { name: 'temperatura_maxima', type: 'number', placeholder: 'Temperatura máxima' },
-                            { name: 'temperatura_minima', type: 'number', placeholder: 'Temperatura mínima' },
-                            { name: 'temperatura_media', type: 'number', placeholder: 'Temperatura media' },
-                            { name: 'precipitacion', type: 'number', placeholder: 'Precipitación' },
-                            { name: 'presencia_del_hongo', type: 'checkbox', placeholder: 'Presencia del hongo' },
-                        ]}
-                        fetchUrl={`${process.env.NEXT_PUBLIC_API_URL}/campos/`}
-                        postUrl={`${process.env.NEXT_PUBLIC_API_URL}/observaciones/`}
-                        buttonText="Registrar nueva observación"
-                    />
+                    <MainComponent/>                  
                 </div>
             </div>
 

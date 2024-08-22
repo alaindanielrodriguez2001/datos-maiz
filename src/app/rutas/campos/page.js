@@ -33,6 +33,7 @@ const Page = () => {
                     deleteUrl={`${process.env.NEXT_PUBLIC_API_URL}/campo`}
                     columns={['nombre_del_campo', 'municipio', 'forma_productiva', 'cultivar', 'tipo_de_suelo', 'sistema_de_riego', 'altura_snm', 'metodo_de_siembra', 'tipo_de_fertilizacion', 'tipo_de_labor_cultural', 'distancia_de_siembra']}
                     formattedColumns={['Nombre', 'Municipio', 'Forma productiva', 'Cultivar', 'Tipo de suelo', 'Sistema de riego', 'Altura SNM', 'Método de siembra', 'Tipo de fertilización', 'Tipo de laber cultural', 'Distancia de siembra']}
+                    onFetchData={() => fetchData()}
                 />
                 <InputForm
                     formFields={[
@@ -50,6 +51,7 @@ const Page = () => {
                     ]}
                     postUrl={`${process.env.NEXT_PUBLIC_API_URL}/campos/`}
                     buttonText="Registrar nuevo campo"
+                    onFormSubmit={() => fetchData()}
                 />
             </main>
         </div>
