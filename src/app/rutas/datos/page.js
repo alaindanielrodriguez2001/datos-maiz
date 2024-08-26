@@ -4,6 +4,7 @@ import InfoCard from '@/components/InfoCard';
 import PageHeader from "@/components/PageHeader";
 
 const registro = () => {
+    
     return (
         <main className="flex flex-col overflow-x-clip scroll-mx-0 px-10">
 

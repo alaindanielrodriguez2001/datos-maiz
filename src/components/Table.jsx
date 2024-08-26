@@ -4,7 +4,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import CustomButton from './CustomButton';
 
-const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData }) => {
+const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compositeHeader }) => {
     const [selectedId, setSelectedId] = useState(null);
     const { data: session, status } = useSession();
 
@@ -33,16 +33,26 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData }) => {
         }
     };
 
-
     return (
         <div className="w-full overflow-x-auto mt-7 mb-2">
             <table className="w-full border-collapse border border-maiz-dark">
                 <thead>
                     <tr>
                         {formattedColumns.map((column) => (
-                            <th key={column} className="border border-maiz-dark p-2">{column}</th>
+                            <th key={column.title} colSpan={column.subColumns ? column.subColumns.length : 1} className="border border-maiz-dark p-2">
+                                {column.title}
+                            </th>
                         ))}
                     </tr>
+                    {compositeHeader && (
+                        <tr>
+                            {formattedColumns.map((column) => (
+                                column.subColumns ? column.subColumns.map((subColumn) => (
+                                    <th key={subColumn} className="border border-maiz-dark p-2">{subColumn}</th>
+                                )) : <th key={column.title} className="border border-maiz-dark p-2"></th>
+                            ))}
+                        </tr>
+                    )}
                 </thead>
                 <tbody>
                     {data.map((row) => (

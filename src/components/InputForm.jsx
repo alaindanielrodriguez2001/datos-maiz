@@ -9,20 +9,20 @@ const InputForm = ({ formFields, fetchUrl, postUrl, buttonText, onFormSubmit }) 
     const [formData, setFormData] = useState(
         formFields.reduce((acc, field) => ({ ...acc, [field.name]: field.defaultValue || '' }), {})
     );
-    const [campoNames, setCampoNames] = useState([]);
+    const [estacionNames, setEstacionNames] = useState([]);
     const { data: session, status } = useSession();
 
     useEffect(() => {
         if (fetchUrl) {
-            const getCampoNames = async () => {
+            const getEstacionNames = async () => {
                 try {
                     const response = await axios.get(fetchUrl);
-                    setCampoNames(response.data);
+                    setEstacionNames(response.data);
                 } catch (error) {
-                    console.error('Error fetching campo names:', error);
+                    console.error('Error fetching estacion names:', error);
                 }
             };
-            getCampoNames();
+            getEstacionNames();
         }
     }, [fetchUrl]);
 
@@ -48,7 +48,7 @@ const InputForm = ({ formFields, fetchUrl, postUrl, buttonText, onFormSubmit }) 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         try {
             const response = await axios.post(postUrl, formData, {
                 headers: {
@@ -61,9 +61,15 @@ const InputForm = ({ formFields, fetchUrl, postUrl, buttonText, onFormSubmit }) 
             onFormSubmit();
             window.alert("La nueva información fue guardada.");
         } catch (error) {
+            if (error.response && error.response.status === 401) {
                 window.alert("Usted necesita autenticarse para modificar la información guardada en el sistema");
+            } else {
+                window.alert("Verifique que los datos introducidos sean correctos y completos");
+            }
+            console.error('Error:', error);
         }
     };
+    
 
     return (
         <div>
@@ -83,7 +89,7 @@ const InputForm = ({ formFields, fetchUrl, postUrl, buttonText, onFormSubmit }) 
                                     onChange={handleChange}
                                 >
                                     <option value="">{field.placeholder}</option>
-                                    {campoNames.map((campo) => (
+                                    {estacionNames.map((campo) => (
                                         <option key={campo.id} value={campo.id}>{campo.nombre_del_campo}</option>
                                     ))}
                                 </select>

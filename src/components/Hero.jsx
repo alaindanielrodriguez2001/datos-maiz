@@ -9,10 +9,22 @@ const Hero = () => {
             <PageHeader
                 imagesrc="/images/logo.png"
                 title={<>Datamaíz</>}
-                content={<>Este software tiene como objetivo permitir a los investigadores 
-                    realizar el registro digital de datos sobre el cultivo del maíz en varias 
-                    localidades del centro de Cuba, con enfoque en la aparición de la enfermedad 
-                    <span className="italic"> Phyllachora maydis</span> o "mancha de asfalto".</>
+                content={<>
+                    <p>El presente software permite el pronóstico de la enfermedad fúngica mancha de asfalto
+                        <span className="italic"> (Phyllachora maydis Maubl.) </span> en el cultivo del maíz
+                        <span className="italic"> (Zea mays, L.) </span> sobre la base de observaciones
+                        meteorológicas.</p>
+                    <br />
+                    <p>Esta enfermedad está distribuida en Costa Rica, Cuba, República Dominicana, El Salvador, Guatemala, Haití, Honduras,
+                        México, Nicaragua, Panamá, Puerto Rico, Trinidad y Tobago, Islas Vírgenes de los Estados Unidos
+                        de Norteamérica , Bolivia, Colombia, Ecuador, Perú y Venezuela (CABI, 2020), ocasionando
+                        pérdidas en el rendimiento agrícola del cultivo.</p>
+                    <br />
+                    <p>Los resultados del sistema de pronóstico contribuyen al uso racional y eficiente
+                        de los medios fitosanitarios en la agricultura cubana, en empresas agrícolas y
+                        diferentes formas productivas de nuestra agricultura. </p>
+
+                </>
                 }
             />
 
@@ -25,9 +37,9 @@ const Hero = () => {
 
                 <InfoCard
                     imagesrc="/images/hero.jpg"
-                    title="Registro de observaciones periódicas"
+                    title="Registro de observaciones diarias"
                     text={<><span className="font-bold italic">Datamaíz </span>permite almacenar las mediciones de variables meteorológicas y estado de las plantas en los
-                        terrenos donde se lleva a cabo el cultivo de maíz para la investigación.</>}
+                        terrenos de las unidades donde se lleva a cabo el cultivo de maíz para la investigación.</>}
                 />
 
                 <InfoCard
@@ -38,16 +50,21 @@ const Hero = () => {
 
                 <InfoCard
                     imagesrc="/images/tar_spot1.jpg"
-                    title="Predicción de la aparición de la enfermedad"
-                    text={<>Use un modelo de aprendizaje de máquina basado en los patrones históricos para predecir la aparición de la mancha de asfalto.</>}
+                    title="Pronóstico de la aparición de la enfermedad"
+                    text={<>Esté al tanto de los pronósticos de aparición de la enfermedad fúngica en las unidades de cultivo investigadas.</>}
                 />
 
                 <InfoCard
                     imagesrc="/images/campos.jpg"
-                    title="Campos de cultivo"
+                    title="Unidades de cultivo"
                     text={<>Guarde y consulte la información sobre los campos de cultivo vinculados al estudio.</>}
                 />
 
+                <InfoCard
+                    imagesrc="/images/estacion.jpg"
+                    title="Estaciones meteorológicas"
+                    text={<>Guarde y consulte la información sobre los campos de cultivo vinculados al estudio.</>}
+                />
 
 
             </div>

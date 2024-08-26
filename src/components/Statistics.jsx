@@ -17,12 +17,21 @@ const Statistics = ({ data }) => {
             <h2 className="text-maiz text-4xl text-center">
                 Resumen estadístico de los registros filtrados
             </h2>
-            <div className="w-full overflow-x-auto my-7">                
-                    <Table
-                        columns={['keyword', 'fase_fenologica', 'humedad_maxima', 'humedad_minima', 'humedad_media', 'temperatura_maxima', 'temperatura_minima', 'temperatura_media', 'precipitacion']}
-                        formattedColumns={['', 'Fase fenológica', 'Humedad máxima', 'Humedad mínima', 'Humedad media', 'Temperatura máxima', 'Temperatura mínima', 'Temperatura media', 'Precipitación']}
-                        data={statistics}
-                    />               
+            <div className="w-full overflow-x-auto my-7">
+                <Table
+                    columns={['keyword', 'temperatura_maxima', 'temperatura_minima', 'temperatura_media', 'humedad_maxima', 'humedad_minima', 'humedad_media', 'horas_hr_mayor_que_90', 'hr_mayor_que_90_max', 'hr_mayor_que_90_min', 'hr_mayor_que_90_med', 'precipitacion', 'velocidad_del_viento']}
+                    formattedColumns={[
+                        { title: 'Estación' },
+                        { title: 'Fecha' },
+                        { title: 'Temperaturas', subColumns: ['Mínima °C', 'Media °C', 'Máxima °C'] },
+                        { title: 'Humedad relativa', subColumns: ['Mínima %', 'Media %', 'Máxima %', 'Horas > 90%'] },
+                        { title: 'Período de HR ≥ 90%', subColumns: ['Mínima °C', 'Media °C', 'Máxima °C'] },
+                        { title: 'Precipitación mm' },
+                        { title: 'Velocidad del viento (m seg-1)' }
+                    ]}
+                    data={statistics}
+                    compositeHeader = {true}
+                />
             </div>
         </div>
     );

@@ -19,9 +19,9 @@ const PageHeader = ({ title, imagesrc, content }) => {
                 </div>
                 )}
 
-                <p className="text-3xl text-center text-maiz">
+                <div className="text-3xl text-center text-maiz">
                     {content}
-                </p>
+                </div>
             </div>
         </div>
     )
