@@ -1,6 +1,5 @@
 'use client'
-import MainComponent from '@/components/MainComponent';
-import InfoCard from '@/components/InfoCard';
+import RegistroComponent from '@/components/RegistroComponent';
 import PageHeader from "@/components/PageHeader";
 
 const registros = () => {
@@ -17,7 +16,7 @@ const registros = () => {
 
             <div className="flex flex-col px-4 text-maiz">
                 <div className="container flex flex-col">
-                    <MainComponent/>                  
+                    <RegistroComponent/>                  
                 </div>
             </div>
 

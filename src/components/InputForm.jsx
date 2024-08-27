@@ -1,30 +1,30 @@
 'use client'
 import { useSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { fetchData, postData } from '@/services/api';
 import CustomButton from './CustomButton';
 
-const InputForm = ({ formFields, fetchUrl, postUrl, buttonText, onFormSubmit }) => {
+const InputForm = ({ formFields, fetchUrls = [], postUrl, buttonText, onFormSubmit }) => {
     const [showForm, setShowForm] = useState(false);
     const [formData, setFormData] = useState(
         formFields.reduce((acc, field) => ({ ...acc, [field.name]: field.defaultValue || '' }), {})
     );
-    const [estacionNames, setEstacionNames] = useState([]);
+    const [options, setOptions] = useState({});
     const { data: session, status } = useSession();
 
     useEffect(() => {
-        if (fetchUrl) {
-            const getEstacionNames = async () => {
-                try {
-                    const response = await axios.get(fetchUrl);
-                    setEstacionNames(response.data);
-                } catch (error) {
-                    console.error('Error fetching estacion names:', error);
-                }
-            };
-            getEstacionNames();
+        const fetchOptions = async () => {
+            const optionsData = {};
+            for (const { name, url } of fetchUrls) {
+                const data = await fetchData(url);
+                optionsData[name] = data;
+            }
+            setOptions(optionsData);
+        };
+        if (fetchUrls.length > 0) {
+            fetchOptions();
         }
-    }, [fetchUrl]);
+    }, [fetchUrls]);
 
     const handleAdd = () => {
         setShowForm(!showForm);
@@ -48,14 +48,12 @@ const InputForm = ({ formFields, fetchUrl, postUrl, buttonText, onFormSubmit }) 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
         try {
-            const response = await axios.post(postUrl, formData, {
+            await postData(postUrl, formData, {
                 headers: {
                     Authorization: `Bearer ${session.accessToken}`,
                 },
             });
-            console.log('Data created:', response.data);
             setFormData(formFields.reduce((acc, field) => ({ ...acc, [field.name]: field.defaultValue || '' }), {}));
             setShowForm(false);
             onFormSubmit();
@@ -69,7 +67,6 @@ const InputForm = ({ formFields, fetchUrl, postUrl, buttonText, onFormSubmit }) 
             console.error('Error:', error);
         }
     };
-    
 
     return (
         <div>
@@ -89,8 +86,8 @@ const InputForm = ({ formFields, fetchUrl, postUrl, buttonText, onFormSubmit }) 
                                     onChange={handleChange}
                                 >
                                     <option value="">{field.placeholder}</option>
-                                    {estacionNames.map((campo) => (
-                                        <option key={campo.id} value={campo.id}>{campo.nombre_del_campo}</option>
+                                    {options[field.name]?.map((option) => (
+                                        <option key={option.id} value={option.id}>{option.nombre}</option>
                                     ))}
                                 </select>
                             ) : field.type === 'checkbox' ? (
@@ -105,13 +102,15 @@ const InputForm = ({ formFields, fetchUrl, postUrl, buttonText, onFormSubmit }) 
                                 </div>
                             ) : field.type === 'date' ? (
                                 <input
-                                    type="date"
+                                    type="text"
                                     name={field.name}
                                     placeholder={field.placeholder}
                                     value={formData[field.name]}
+                                    onFocus={(e) => e.target.type = 'date'}
+                                    onBlur={(e) => {
+                                        if (!e.target.value) e.target.type = 'text';
+                                    }}
                                     onChange={handleDateChange}
-                                    onFocus={(e) => e.target.placeholder = ''}
-                                    onBlur={(e) => e.target.placeholder = field.placeholder}
                                 />
                             ) : (
                                 <input

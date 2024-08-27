@@ -1,7 +1,7 @@
 'use client'
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
-import axios from 'axios';
+import { deleteData } from '@/services/api';
 import CustomButton from './CustomButton';
 
 const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compositeHeader }) => {
@@ -17,11 +17,13 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compos
             const confirmDelete = window.confirm('¿Estás seguro de que deseas eliminar esta fila?');
             if (confirmDelete) {
                 try {
-                    await axios.delete(`${deleteUrl}/${selectedId}`, {
+
+                    await deleteData(`${deleteUrl}/${selectedId}`, {
                         headers: {
                             Authorization: `Bearer ${session.accessToken}`,
                         },
                     });
+
                     onFetchData();
                     setSelectedId(null);
                     window.alert("La fila fue eliminada.");
@@ -54,21 +56,22 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compos
                         </tr>
                     )}
                 </thead>
-                <tbody>
-                    {data.map((row) => (
-                        <tr
-                            key={row.id}
-                            onClick={() => handleRowClick(row.id)}
-                            className={selectedId === row.id ? 'bg-gray-200' : ''}
-                        >
-                            {columns.map((column) => (
-                                <td key={column} className="border border-maiz p-2">
-                                    {column === 'presencia_del_hongo' ? (row[column] ? 'Sí' : 'No') : row[column]}
-                                </td>
-                            ))}
-                        </tr>
-                    ))}
-                </tbody>
+                {data &&
+                    (<tbody>
+                        {data.map((row) => (
+                            <tr
+                                key={row.id}
+                                onClick={() => handleRowClick(row.id)}
+                                className={selectedId === row.id ? 'bg-gray-200' : ''}
+                            >
+                                {columns.map((column) => (
+                                    <td key={column} className="border border-maiz p-2">
+                                        {row[column] === true || row[column] === false ? (row[column] ? 'Sí' : 'No') : row[column]}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>)}
             </table>
             {selectedId && (
                 <div className="mt-3 w-full">

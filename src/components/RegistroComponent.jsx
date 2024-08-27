@@ -4,9 +4,9 @@ import TableSelector from './TableSelector';
 import Table from './Table';
 import Statistics from './Statistics';
 import InputForm from './InputForm';
-import axios from 'axios';
+import { fetchData, postData } from '../services/api';
 
-const MainComponent = () => {
+const RegistroComponent = () => {
   const [estacionSeleccionada, setEstacionSeleccionada] = useState(0);
   const [data, setData] = useState([]);
 
@@ -18,35 +18,41 @@ const MainComponent = () => {
     { title: 'Período de HR ≥ 90%', subColumns: ['Mínima °C', 'Media °C', 'Máxima °C'] },
     { title: 'Precipitación mm' },
     { title: 'Velocidad del viento (m seg-1)' }
-  ]
-  const columns = ['estacion', 'fecha', 'temperatura_maxima', 'temperatura_minima', 'temperatura_media', 'humedad_maxima', 'humedad_minima', 'humedad_media', 'horas_hr_mayor_que_90', 'hr_mayor_que_90_max', 'hr_mayor_que_90_min', 'hr_mayor_que_90_med', 'precipitacion', 'velocidad_del_viento']
+  ];
+  const columns = ['estacion_codigo', 'fecha', 'temperatura_maxima', 'temperatura_minima', 'temperatura_media', 'humedad_maxima', 'humedad_minima', 'humedad_media', 'horas_hr_mayor_que_90', 'hr_mayor_que_90_max', 'hr_mayor_que_90_min', 'hr_mayor_que_90_med', 'precipitacion', 'velocidad_del_viento'];
 
-  const fetchData = async (estacion) => {
-    console.log(`Fetching data for estacion: ${estacion}`);
-    try {
-      const estacionUrl = `${process.env.NEXT_PUBLIC_API_URL}/registros_estacion/${estacion}/`;
-      const response = await axios.get(estacionUrl);
-      console.log('Data fetched:', response.data);
-      setData(response.data);
-    } catch (error) {
-      console.error('Failed to fetch data:', error);
-    }
-  };
+  const rutaRegistrosEstacionSeleccionada = `registros_estacion/${estacionSeleccionada}`;
+  const rutaOpciones = 'estaciones/';
 
   useEffect(() => {
-    fetchData(estacionSeleccionada);
-  }, [estacionSeleccionada]);
+    const fetchDataAsync = async () => {
+      const result = await fetchData(rutaRegistrosEstacionSeleccionada);
+      setData(result);
+    };
+    fetchDataAsync();
+  }, [rutaRegistrosEstacionSeleccionada]);
 
   return (
     <div>
-      <TableSelector onEstacionChange={setEstacionSeleccionada} onFetchData={fetchData} />
+      <TableSelector
+        rutaOpciones={rutaOpciones}
+        onEstacionChange={setEstacionSeleccionada}
+        onFetchData={async () => {
+          const result = await fetchData(rutaRegistrosEstacionSeleccionada);
+          setData(result);
+        }}
+      />
+
       <Table
         columns={columns}
         formattedColumns={formattedColumns}
         data={data}
-        deleteUrl={`${process.env.NEXT_PUBLIC_API_URL}/registro`}
-        onFetchData={() => fetchData(estacionSeleccionada)}
-        compositeHeader = {true}
+        deleteUrl={'registro'}
+        onFetchData={async () => {
+          const result = await fetchData(rutaRegistrosEstacionSeleccionada);
+          setData(result);
+        }}
+        compositeHeader={true}
       />
 
       <InputForm
@@ -66,10 +72,15 @@ const MainComponent = () => {
           { name: 'precipitacion', type: 'number', placeholder: 'Precipitación' },
           { name: 'velocidad_del_viento', type: 'number', placeholder: 'Velocidad del viento' },
         ]}
-        fetchUrl={`${process.env.NEXT_PUBLIC_API_URL}/estaciones/`}
-        postUrl={`${process.env.NEXT_PUBLIC_API_URL}/registros/`}
+        fetchUrls={[
+          { name: 'estacion', url: 'estaciones/' },
+        ]}
+        postUrl={'registros/'}
         buttonText="Introducir un nuevo registro"
-        onFormSubmit={() => fetchData(estacionSeleccionada)}
+        onFormSubmit={async () => {
+          const result = await fetchData(rutaRegistrosEstacionSeleccionada);
+          setData(result);
+        }}
       />
 
       <div className="flex flex-col px-4 text-maiz mb-10">
@@ -82,4 +93,4 @@ const MainComponent = () => {
   );
 };
 
-export default MainComponent;
+export default RegistroComponent;
