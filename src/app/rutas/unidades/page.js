@@ -24,7 +24,7 @@ const Unidades = () => {
     ];
 
     const formattedColumns = [
-        { title: 'Nombre' },
+        { title: 'Nombre de la entidad productiva' },
         { title: 'Estación' },
         { title: 'Denominación del cultivar' },
         { title: 'Tipo de suelo' },
@@ -51,7 +51,9 @@ const Unidades = () => {
             <main className="relative overflow-x-clip scroll-mx-0 px-10 text-maiz">
                 <PageHeader
                     title={<>Unidades de cultivo</>}
-                    content={<>En la tabla siguiente puede acceder a los datos de las unidades de cultivo.</>}
+                    content={<>En la tabla siguiente puede acceder a los datos de las unidades de cultivo de las diferentes entidades productivas 
+                        asociadas a la investigación.
+                    </>}
                 />
                 <Table
                     className="px-4"
