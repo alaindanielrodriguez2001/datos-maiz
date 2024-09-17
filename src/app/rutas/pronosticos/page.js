@@ -6,15 +6,15 @@ import { fetchData } from '@/services/api';
 
 const Pronostico = () => {
     const [data, setData] = useState([])
-    const columns=['unidad', 'denominacion_del_cultivar', 'periodo_favorable', 'plazo_primeros_sintomas', 'tipo_de_mensaje', 'total_grados_dias', 'dias_criticos']
+    const columns=['unidad', 'fecha_de_siembra', 'denominacion_del_cultivar', 'periodo_favorable', 'plazo_primeros_sintomas', 'tipo_de_mensaje', 'total_grados_dias']
     const formattedColumns=[
-        {title: 'Unidad'}, 
+        {title: 'Entidad productiva'}, 
+        {title: 'Fecha de siembra'}, 
         {title: 'Denominación del cultivar'}, 
         {title: 'Período favorable'}, 
         {title: 'Plazo de primeros sìntomas'}, 
         {title: 'Tipo de mensaje'}, 
         {title: 'Total de grados días (GDD) (°C)'}, 
-        {title: 'Días críticos acumulados'}, 
     ]
     const ruta = 'pronosticos/';
 
@@ -38,6 +38,7 @@ const Pronostico = () => {
             <Table
                 className="px-4"
                 deleteUrl={'pronostico'}
+                data = {data}
                 columns={columns}
                 formattedColumns={formattedColumns}
                 onFetchData={() => fetchDataAsync()}

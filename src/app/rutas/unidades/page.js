@@ -20,7 +20,9 @@ const Unidades = () => {
         'tipo_de_fertilizante', 
         'dosis_de_fertilizante', 
         'marco_de_siembra', 
-        'sistema_de_riego'
+        'sistema_de_riego',
+        'suma_termica',
+        'dias_criticos'
     ];
 
     const formattedColumns = [
@@ -34,7 +36,9 @@ const Unidades = () => {
         { title: 'Tipo de fertilizante' },
         { title: 'Dosis de fertilizante' },
         { title: 'Marco de siembra' },
-        { title: 'Sistema de riego' }
+        { title: 'Sistema de riego' },
+        { title: 'Suma térmica acumulada' },
+        { title: 'Racha de dias críticos' }
     ];
 
     const fetchDataAsync = async () => {
@@ -66,7 +70,7 @@ const Unidades = () => {
                 />
                 <InputForm
                     formFields={[
-                        { name: 'nombre', type: 'text', placeholder: 'Nombre' },
+                        { name: 'nombre', type: 'text', placeholder: 'Nombre de la entidad' },
                         { name: 'estacion_codigo', type: 'select', placeholder: 'Estación' },
                         { name: 'denominacion_del_cultivar', type: 'text', placeholder: 'Denominación del cultivar' },
                         { name: 'tipo_de_suelo', type: 'text', placeholder: 'Tipo de suelo' },

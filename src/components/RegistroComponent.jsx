@@ -36,7 +36,7 @@ const RegistroComponent = () => {
     <div>
       <TableSelector
         rutaOpciones={rutaOpciones}
-        onEstacionChange={setEstacionSeleccionada}
+        onOpcionChange={setEstacionSeleccionada}
         onFetchData={async () => {
           const result = await fetchData(rutaRegistrosEstacionSeleccionada);
           setData(result);
@@ -66,11 +66,11 @@ const RegistroComponent = () => {
           { name: 'humedad_minima', type: 'number', placeholder: 'Humedad relativa mínima' },
           { name: 'humedad_media', type: 'number', placeholder: 'Humedad relativa media' },
           { name: 'horas_hr_mayor_que_90', type: 'number', placeholder: 'Horas HR ≥ 90 %' },
-          { name: 'hr_mayor_que_90_max', type: 'number', placeholder: 'Máxima °C' },
-          { name: 'hr_mayor_que_90_min', type: 'number', placeholder: 'Mínima °C' },
-          { name: 'hr_mayor_que_90_med', type: 'number', placeholder: 'Media °C' },
+          { name: 'hr_mayor_que_90_max', type: 'number', placeholder: 'Máxima °C HR ≥ 90 %' },
+          { name: 'hr_mayor_que_90_min', type: 'number', placeholder: 'Mínima °C HR ≥ 90 %' },
+          { name: 'hr_mayor_que_90_med', type: 'number', placeholder: 'Media °C HR ≥ 90 %' },
           { name: 'precipitacion', type: 'number', placeholder: 'Precipitación' },
-          { name: 'velocidad_del_viento', type: 'number', placeholder: 'Velocidad del viento' },
+          { name: 'velocidad_del_viento', type: 'number', placeholder: 'Velocidad del viento m/s' },
         ]}
         fetchUrls={[
           { name: 'estacion', url: 'estaciones/' },
