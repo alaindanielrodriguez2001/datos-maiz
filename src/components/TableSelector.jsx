@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchData } from "@/services/api";
 
-const TableSelector = ({ rutaOpciones, onOpcionChange, onFetchData }) => {
+const TableSelector = ({ rutaOpciones, onOpcionChange}) => {
   const [opcionesData, setOpcionesData] = useState([]);
   const [opcionSeleccionada, setOpcionSeleccionada] = useState(0);
 
@@ -18,7 +18,6 @@ const TableSelector = ({ rutaOpciones, onOpcionChange, onFetchData }) => {
     const opcionSeleccionadaId = parseInt(e.target.value, 10);
     setOpcionSeleccionada(opcionSeleccionadaId);
     onOpcionChange(opcionSeleccionadaId);
-    onFetchData();
   };
 
   return (

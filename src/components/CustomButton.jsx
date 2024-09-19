@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CustomButton = ({ content, customStyle, onClick, is_disabled }) => {
+const CustomButton = ({ content, customStyle, onClick }) => {
     return (
         <button 
             onClick={onClick}

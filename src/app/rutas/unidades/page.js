@@ -11,7 +11,7 @@ const Unidades = () => {
 
     const columns = [
         'nombre', 
-        'estacion_codigo', 
+        'estacion_nombre', 
         'denominacion_del_cultivar', 
         'tipo_de_suelo', 
         'fecha_de_siembra', 

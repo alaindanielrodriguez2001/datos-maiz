@@ -37,42 +37,58 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compos
 
     return (
         <div className="w-full overflow-x-auto mt-7 mb-2">
-            <table className="w-full border-collapse border border-maiz-dark">
-                <thead>
-                    <tr>
-                        {formattedColumns.map((column) => (
-                            <th key={column.title} colSpan={column.subColumns ? column.subColumns.length : 1} className="border border-maiz-dark p-2">
-                                {column.title}
-                            </th>
-                        ))}
-                    </tr>
-                    {compositeHeader && (
+            <div>
+                <table className="w-full border-collapse border border-maiz-dark">
+                    <thead>
                         <tr>
                             {formattedColumns.map((column) => (
-                                column.subColumns ? column.subColumns.map((subColumn) => (
-                                    <th key={subColumn} className="border border-maiz-dark p-2">{subColumn}</th>
-                                )) : <th key={column.title} className="border border-maiz-dark p-2"></th>
+                                <th key={column.title} colSpan={column.subColumns ? column.subColumns.length : 1} className={`${column.subColumns ? 'border': 'border-t border-r border-l'} border-maiz-dark p-2`}>
+                                    {column.title}
+                                </th>
                             ))}
                         </tr>
-                    )}
-                </thead>
-                {data &&
-                    (<tbody>
-                        {data.map((row) => (
-                            <tr
-                                key={row.id}
-                                onClick={() => handleRowClick(row.id)}
-                                className={selectedId === row.id ? 'bg-gray-200' : ''}
-                            >
-                                {columns.map((column) => (
-                                    <td key={column} className="border border-maiz p-2">
-                                        {row[column] === true || row[column] === false ? (row[column] ? 'Sí' : 'No') : row[column]}
-                                    </td>
+                        {compositeHeader && (
+                            <tr>
+                                {formattedColumns.map((column) => (
+                                    column.subColumns ? column.subColumns.map((subColumn) => (
+                                        <th key={subColumn} className="border border-maiz-dark p-2">{subColumn}</th>
+                                    )) : <th key={column.title} className="border-b border-r border-l border-maiz-dark p-2"></th>
                                 ))}
                             </tr>
-                        ))}
-                    </tbody>)}
-            </table>
+                        )}
+                    </thead>
+                    {data &&
+                        (
+                            <tbody>
+                                {data.map((row) => (
+                                    <tr
+                                        key={row.id}
+                                        onClick={() => handleRowClick(row.id)}
+                                        className={selectedId === row.id ? 'bg-gray-200' : ''}
+                                    >
+                                        {columns.map((column) => (
+                                            <td key={column} className="border border-maiz p-2">
+                                                {row[column] === true || row[column] === false ? (row[column] ? 'Sí' : 'No') : row[column]}
+                                            </td>
+                                        ))}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        )
+                    }
+                </table>
+            </div>
+
+            <div className="w-full border-collapse border border-maiz-dark">
+                {data.length == 0 &&
+                    (
+                        <div className="items-center justify-center text-center p-2 text-xl w-full">
+                            No hay datos aún
+                        </div>
+                    )
+                }
+            </div>
+
             {selectedId && (
                 <div className="mt-3 w-full">
                     <CustomButton
@@ -86,5 +102,7 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compos
         </div>
     );
 };
+
+
 
 export default Table;

@@ -19,7 +19,21 @@ const RegistroComponent = () => {
     { title: 'Precipitación mm' },
     { title: 'Velocidad del viento (m seg-1)' }
   ];
-  const columns = ['estacion_codigo', 'fecha', 'temperatura_maxima', 'temperatura_minima', 'temperatura_media', 'humedad_maxima', 'humedad_minima', 'humedad_media', 'horas_hr_mayor_que_90', 'hr_mayor_que_90_max', 'hr_mayor_que_90_min', 'hr_mayor_que_90_med', 'precipitacion', 'velocidad_del_viento'];
+  const columns = [
+    'estacion_nombre', 
+    'fecha', 'temperatura_maxima', 
+    'temperatura_minima', 
+    'temperatura_media', 
+    'humedad_maxima', 
+    'humedad_minima', 
+    'humedad_media', 
+    'horas_hr_mayor_que_90', 
+    'hr_mayor_que_90_max', 
+    'hr_mayor_que_90_min', 
+    'hr_mayor_que_90_med', 
+    'precipitacion', 
+    'velocidad_del_viento'
+  ];
 
   const rutaRegistrosEstacionSeleccionada = `registros_estacion/${estacionSeleccionada}`;
   const rutaOpciones = 'estaciones/';
@@ -30,17 +44,13 @@ const RegistroComponent = () => {
       setData(result);
     };
     fetchDataAsync();
-  }, [rutaRegistrosEstacionSeleccionada]);
+  }, [estacionSeleccionada]);
 
   return (
     <div>
       <TableSelector
         rutaOpciones={rutaOpciones}
         onOpcionChange={setEstacionSeleccionada}
-        onFetchData={async () => {
-          const result = await fetchData(rutaRegistrosEstacionSeleccionada);
-          setData(result);
-        }}
       />
 
       <Table
@@ -85,7 +95,6 @@ const RegistroComponent = () => {
 
       <div className="flex flex-col px-4 text-maiz mb-10">
         <div className="container flex flex-col">
-          <hr className="border border-maiz-dark my-5 " />
           <Statistics data={data} />
         </div>
       </div>

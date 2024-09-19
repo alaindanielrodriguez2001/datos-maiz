@@ -19,7 +19,7 @@ const PageHeader = ({ title, imagesrc, content }) => {
                 </div>
                 )}
 
-                <div className="text-3xl text-center text-maiz">
+                <div className="text-2xl text-center text-maiz">
                     {content}
                 </div>
             </div>
