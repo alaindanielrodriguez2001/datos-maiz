@@ -3,7 +3,9 @@ import React, { useState, useEffect } from 'react';
 import TableSelector from './TableSelector';
 import Table from './Table';
 import Statistics from './Statistics';
+import LineGraph from './LineGraph';
 import InputForm from './InputForm';
+import Seccion from './Seccion';
 import { fetchData, postData } from '../services/api';
 
 const RegistroComponent = () => {
@@ -20,18 +22,18 @@ const RegistroComponent = () => {
     { title: 'Velocidad del viento (m seg-1)' }
   ];
   const columns = [
-    'estacion_nombre', 
-    'fecha', 'temperatura_maxima', 
-    'temperatura_minima', 
-    'temperatura_media', 
-    'humedad_maxima', 
-    'humedad_minima', 
-    'humedad_media', 
-    'horas_hr_mayor_que_90', 
-    'hr_mayor_que_90_max', 
-    'hr_mayor_que_90_min', 
-    'hr_mayor_que_90_med', 
-    'precipitacion', 
+    'estacion_nombre',
+    'fecha', 'temperatura_maxima',
+    'temperatura_minima',
+    'temperatura_media',
+    'humedad_maxima',
+    'humedad_minima',
+    'humedad_media',
+    'horas_hr_mayor_que_90',
+    'hr_mayor_que_90_max',
+    'hr_mayor_que_90_min',
+    'hr_mayor_que_90_med',
+    'precipitacion',
     'velocidad_del_viento'
   ];
 
@@ -97,6 +99,18 @@ const RegistroComponent = () => {
         <div className="container flex flex-col">
           <Statistics data={data} />
         </div>
+        <Seccion
+          title={"Comportamiento de la estación seleccionada en los últimos 7 registros"}
+          content={
+            <div className="container flex flex-col">
+              <LineGraph
+                horizontal_values={data.slice(-7).map(item => item.fecha)}
+                vertical_values={data.slice(-7).map(item => item.temperatura_media)}
+                titulo={"Temperatura media"}
+              />
+            </div>
+          }
+        />
       </div>
     </div>
   );
