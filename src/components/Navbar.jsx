@@ -52,7 +52,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className={`flex top-0 fixed ${nav ? "h-[250px] md:h-[75px]" : "h-[75px]"} bg-maiz w-full text-white z-50 items-center justify-start border border-b-white`}>
+    <nav className={`flex top-0 fixed ${nav ? "h-[315px] lg:h-[100px]" : "h-[100px]"} bg-maiz w-full text-white z-50 items-center justify-start border border-b-white`}>
       <img
         src="/favicon.ico"
         alt="logo"
@@ -66,7 +66,7 @@ const Navbar = () => {
             content={nav ? <FaTimes /> : <FaBars />}
           />
         </div>
-        <ul className={`flex flex-row ${nav ? "max-md:flex-col max-md:space-y-4" : "max-md:hidden"} justify-start space-x-2 md:space-x-3 items-center w-full mx-5`}>
+        <ul className={`flex flex-row ${nav ? "max-lg:flex-col max-lg:space-y-4" : "max-lg:hidden"} justify-start space-x-2 md:space-x-3 items-center w-full mx-5`}>
           {navLinks.map((link) => (
             <li key={link.path}>
               <Link href={link.path}>

@@ -3,7 +3,7 @@ import React from 'react'
 const PageHeader = ({ title, imagesrc, content }) => {
     return (
         <div>
-            <div className="flex flex-col justify-center w-full mt-24 mb-8 space-y-10 px-10">
+            <div className="flex flex-col justify-center w-full mt-36 mb-8 space-y-10 px-10">
 
                 <h1 className="text-6xl text-center text-maiz-dark">
                     {title}

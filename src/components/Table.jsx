@@ -37,9 +37,9 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compos
 
     return (
         <div className="w-full overflow-x-auto mt-7 mb-2">
-            <div>
+            <div className="relative h-96 overflow-y-auto">
                 <table className="w-full border-collapse border border-maiz-dark">
-                    <thead>
+                    <thead className="sticky top-0 bg-white">
                         <tr>
                             {formattedColumns.map((column) => (
                                 <th key={column.title} colSpan={column.subColumns ? column.subColumns.length : 1} className={`${column.subColumns ? 'border': 'border-t border-r border-l'} border-maiz-dark p-2`}>
@@ -57,25 +57,21 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compos
                             </tr>
                         )}
                     </thead>
-                    {data &&
-                        (
-                            <tbody>
-                                {data.map((row) => (
-                                    <tr
-                                        key={row.id}
-                                        onClick={() => handleRowClick(row.id)}
-                                        className={selectedId === row.id ? 'bg-gray-200' : ''}
-                                    >
-                                        {columns.map((column) => (
-                                            <td key={column} className="border border-maiz p-2">
-                                                {row[column] === true || row[column] === false ? (row[column] ? 'Sí' : 'No') : row[column]}
-                                            </td>
-                                        ))}
-                                    </tr>
+                    <tbody>
+                        {data.map((row) => (
+                            <tr
+                                key={row.id}
+                                onClick={() => handleRowClick(row.id)}
+                                className={selectedId === row.id ? 'bg-gray-200' : ''}
+                            >
+                                {columns.map((column) => (
+                                    <td key={column} className="border border-maiz p-2">
+                                        {row[column] === true || row[column] === false ? (row[column] ? 'Sí' : 'No') : row[column]}
+                                    </td>
                                 ))}
-                            </tbody>
-                        )
-                    }
+                            </tr>
+                        ))}
+                    </tbody>
                 </table>
             </div>
 
@@ -102,7 +98,5 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compos
         </div>
     );
 };
-
-
 
 export default Table;

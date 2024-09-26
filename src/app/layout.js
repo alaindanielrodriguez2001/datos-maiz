@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
     <html lang="es">
       <body>
         <SessionProviderWrapper>
-          <Navbar className="mb-6" />
+          <Navbar className="mb-10" />
           {children}
         </SessionProviderWrapper>
       </body>

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import TableSelector from './TableSelector';
 import Table from './Table';
 import Statistics from './Statistics';
-import LineGraph from './LineGraph';
+import GraphsCard from './GraphsCard';
 import InputForm from './InputForm';
 import Seccion from './Seccion';
 import { fetchData, postData } from '../services/api';
@@ -102,12 +102,28 @@ const RegistroComponent = () => {
         <Seccion
           title={"Comportamiento de la estación seleccionada en los últimos 7 registros"}
           content={
-            <div className="container flex flex-col">
-              <LineGraph
-                horizontal_values={data.slice(-7).map(item => item.fecha)}
-                vertical_values={data.slice(-7).map(item => item.temperatura_media)}
-                titulo={"Temperatura media"}
-              />
+            <div className="container flex flex-col space-y-4">
+                <GraphsCard
+                  graphs_data={
+                    [
+                      { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.temperatura_maxima), titulo: 'Máxima' },
+                      { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.temperatura_minima), titulo: 'Mínima' },
+                      { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.temperatura_media), titulo: 'Media' },
+                    ]
+                  }
+                  title = "Temperatura (°C)"
+                />
+                <GraphsCard
+                  graphs_data={
+                    [
+                      { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.humedad_maxima), titulo: 'Máxima' },
+                      { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.humedad_minima), titulo: 'Mínima' },
+                      { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.humedad_media), titulo: 'Media' },
+                      { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.horas_hr_mayor_que_90), titulo: 'Horas con más del 90%'},
+                    ]
+                  }
+                  title = "Humedad relativa (%)"
+                />
             </div>
           }
         />
