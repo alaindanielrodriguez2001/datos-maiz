@@ -38,7 +38,7 @@ const Unidades = () => {
         { title: 'Marco de siembra' },
         { title: 'Sistema de riego' },
         { title: 'Suma térmica acumulada' },
-        { title: 'Racha de dias críticos' }
+        { title: 'Racha de días críticos' }
     ];
 
     const fetchDataAsync = async () => {

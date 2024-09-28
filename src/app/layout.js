@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
 
           <div className = "mt-10 fixed bottom-0 h-[25px] bg-maiz w-full text-white z-50 items-center justify-start  border border-b-white">
               <h1 className = "text-base text-white text-center">
-                  Universidad Central de Las Villas "Marta Abreu", Cuba.
+                  Universidad Central de Las Villas "Marta Abreu", Cuba, 2024.
               </h1>
           </div>
         </SessionProviderWrapper>

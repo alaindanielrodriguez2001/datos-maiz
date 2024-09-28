@@ -13,7 +13,7 @@ const Pronostico = () => {
         {title: 'Fecha de siembra'}, 
         {title: 'Denominación del cultivar'}, 
         {title: 'Período favorable'}, 
-        {title: 'Plazo de primeros sìntomas'}, 
+        {title: 'Plazo de primeros síntomas'}, 
         {title: 'Tipo de mensaje'}, 
         {title: 'Total de grados días (GDD) (°C)'}, 
     ]

@@ -17,10 +17,10 @@ const RegistroComponent = () => {
     { title: 'Estación' },
     { title: 'Fecha' },
     { title: 'Temperaturas', subColumns: ['Mínima °C', 'Media °C', 'Máxima °C'] },
-    { title: 'Humedad relativa', subColumns: ['Mínima %', 'Media %', 'Máxima %', 'Horas > 90%'] },
+    { title: 'Humedad relativa', subColumns: ['Mínima %', 'Media %', 'Máxima %', 'Horas ≥ 90%'] },
     { title: 'Período de HR ≥ 90%', subColumns: ['Mínima °C', 'Media °C', 'Máxima °C'] },
     { title: 'Precipitación mm' },
-    { title: 'Velocidad del viento (m seg-1)' }
+    { title: 'Velocidad del viento (m/s)' }
   ];
   const columns = [
     'estacion_nombre',
