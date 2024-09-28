@@ -14,7 +14,7 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compos
 
     const handleDelete = async () => {
         if (selectedId) {
-            const confirmDelete = window.confirm('¿Estás seguro de que deseas eliminar esta fila?');
+            const confirmDelete = window.confirm('¿Está seguro de que desea eliminar esta fila?');
             if (confirmDelete) {
                 try {
 
@@ -36,13 +36,13 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compos
     };
 
     return (
-        <div className="w-full overflow-x-auto mt-7 mb-2">
-            <div className="relative h-96 overflow-y-auto">
-                <table className="w-full border-collapse border border-maiz-dark">
-                    <thead className="sticky top-0 bg-white">
+        <div className="w-full overflow-x-auto h-auto mt-7 mb-2">
+            <div className="container border-2 h-auto max-h-[500px] overflow-y-scroll border-maiz-dark">
+                <table className="w-full h-auto">
+                    <thead className="bg-white sticky top-0 ">
                         <tr>
                             {formattedColumns.map((column) => (
-                                <th key={column.title} colSpan={column.subColumns ? column.subColumns.length : 1} className={`${column.subColumns ? 'border': 'border-t border-r border-l'} border-maiz-dark p-2`}>
+                                <th key={column.title} colSpan={column.subColumns ? column.subColumns.length : 1} className= 'border-r-2 border-l-2 border-maiz-dark p-2'>
                                     {column.title}
                                 </th>
                             ))}
@@ -51,8 +51,8 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compos
                             <tr>
                                 {formattedColumns.map((column) => (
                                     column.subColumns ? column.subColumns.map((subColumn) => (
-                                        <th key={subColumn} className="border border-maiz-dark p-2">{subColumn}</th>
-                                    )) : <th key={column.title} className="border-b border-r border-l border-maiz-dark p-2"></th>
+                                        <th key={subColumn} className="border-r-2 border-l-2 border-maiz-dark p-2">{subColumn}</th>
+                                    )) : <th key={column.title} className="border-r-2 border-l-2 border-maiz-dark p-2"></th>
                                 ))}
                             </tr>
                         )}
@@ -65,7 +65,7 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compos
                                 className={selectedId === row.id ? 'bg-gray-200' : ''}
                             >
                                 {columns.map((column) => (
-                                    <td key={column} className="border border-maiz p-2">
+                                    <td key={column} className="border-l-2 border-r-2 border-maiz p-2">
                                         {row[column] === true || row[column] === false ? (row[column] ? 'Sí' : 'No') : row[column]}
                                     </td>
                                 ))}
@@ -75,15 +75,16 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compos
                 </table>
             </div>
 
-            <div className="w-full border-collapse border border-maiz-dark">
-                {data.length == 0 &&
-                    (
-                        <div className="items-center justify-center text-center p-2 text-xl w-full">
-                            No hay datos aún
-                        </div>
-                    )
-                }
-            </div>
+
+            {data.length == 0 &&
+                (<div className="w-full border-collapse border border-maiz-dark">
+                    <div className="items-center justify-center text-center p-2 text-xl w-full">
+                        No hay datos aún
+                    </div>
+                </div>
+                )
+            }
+
 
             {selectedId && (
                 <div className="mt-3 w-full">

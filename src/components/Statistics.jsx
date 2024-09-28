@@ -38,11 +38,11 @@ const Statistics = ({ data }) => {
     }, [data]);
 
     return (
-        <div className="flex flex-col justify-center space-y-5 w-full">
+        <div className="flex flex-col justify-center w-full">
             <Seccion
                 title={"Resumen estadístico de los registros filtrados"}
                 content={
-                    <div className="w-full overflow-x-auto my-7">
+                    <div className="w-full overflow-x-auto mt-7 mb-4">
                         <Table
                             columns={columns}
                             formattedColumns={formattedColumns}

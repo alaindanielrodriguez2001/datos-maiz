@@ -52,7 +52,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className={`flex top-0 fixed ${nav ? "h-[315px] lg:h-[100px]" : "h-[100px]"} bg-maiz w-full text-white z-50 items-center justify-start border border-b-white`}>
+    <nav className={`flex top-0 fixed ${nav ? "h-[315px] lg:h-[60px]" : "h-[60px]"} bg-maiz w-full text-white z-50 items-center justify-start border border-b-white`}>
       <img
         src="/favicon.ico"
         alt="logo"
@@ -62,7 +62,7 @@ const Navbar = () => {
         <div className="mx-5">
           <CustomButton
             onClick={() => setNav(!nav)}
-            customStyle="text-white ml-2 md:hidden"
+            customStyle="text-white ml-2 lg:hidden"
             content={nav ? <FaTimes /> : <FaBars />}
           />
         </div>

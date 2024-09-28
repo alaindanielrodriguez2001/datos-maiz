@@ -15,7 +15,18 @@ export default function RootLayout({ children }) {
       <body>
         <SessionProviderWrapper>
           <Navbar className="mb-10" />
+
           {children}
+
+          <div className = "mb-20">
+
+          </div>
+
+          <div className = "mt-10 fixed bottom-0 h-[25px] bg-maiz w-full text-white z-50 items-center justify-start  border border-b-white">
+              <h1 className = "text-base text-white text-center">
+                  Universidad Central de Las Villas "Marta Abreu", Cuba.
+              </h1>
+          </div>
         </SessionProviderWrapper>
       </body>
     </html>

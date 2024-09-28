@@ -13,7 +13,7 @@ const LineGraph = ({ horizontal_values, vertical_values}) => {
       {
         label: 'Temperatura Media (°C)',
         data: vertical_values,
-        borderColor: '#fc9403',
+        borderColor: 'red',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         fill: false,
       },

@@ -10,6 +10,7 @@ import { fetchData, postData } from '../services/api';
 
 const RegistroComponent = () => {
   const [estacionSeleccionada, setEstacionSeleccionada] = useState(0);
+  const [yearSeleccionado, setYearSeleccionado] = useState(new Date().getFullYear());
   const [data, setData] = useState([]);
 
   const formattedColumns = [
@@ -43,16 +44,18 @@ const RegistroComponent = () => {
   useEffect(() => {
     const fetchDataAsync = async () => {
       const result = await fetchData(rutaRegistrosEstacionSeleccionada);
-      setData(result);
+      const filteredData = result.filter(item => new Date(item.fecha).getFullYear() === yearSeleccionado);
+      setData(filteredData);
     };
     fetchDataAsync();
-  }, [estacionSeleccionada]);
+  }, [estacionSeleccionada, yearSeleccionado]);
 
   return (
     <div>
       <TableSelector
         rutaOpciones={rutaOpciones}
         onOpcionChange={setEstacionSeleccionada}
+        onYearChange={setYearSeleccionado}
       />
 
       <Table
@@ -62,7 +65,8 @@ const RegistroComponent = () => {
         deleteUrl={'registro'}
         onFetchData={async () => {
           const result = await fetchData(rutaRegistrosEstacionSeleccionada);
-          setData(result);
+          const filteredData = result.filter(item => new Date(item.fecha).getFullYear() === yearSeleccionado);
+          setData(filteredData);
         }}
         compositeHeader={true}
       />
@@ -81,7 +85,7 @@ const RegistroComponent = () => {
           { name: 'hr_mayor_que_90_max', type: 'number', placeholder: 'Máxima °C HR ≥ 90 %' },
           { name: 'hr_mayor_que_90_min', type: 'number', placeholder: 'Mínima °C HR ≥ 90 %' },
           { name: 'hr_mayor_que_90_med', type: 'number', placeholder: 'Media °C HR ≥ 90 %' },
-          { name: 'precipitacion', type: 'number', placeholder: 'Precipitación' },
+          { name: 'precipitacion', type: 'number', placeholder: 'Precipitación mm' },
           { name: 'velocidad_del_viento', type: 'number', placeholder: 'Velocidad del viento m/s' },
         ]}
         fetchUrls={[
@@ -91,11 +95,12 @@ const RegistroComponent = () => {
         buttonText="Introducir un nuevo registro"
         onFormSubmit={async () => {
           const result = await fetchData(rutaRegistrosEstacionSeleccionada);
-          setData(result);
+          const filteredData = result.filter(item => new Date(item.fecha).getFullYear() === yearSeleccionado);
+          setData(filteredData);
         }}
       />
 
-      <div className="flex flex-col px-4 text-maiz mb-10">
+      <div className="flex flex-col px-4 text-maiz">
         <div className="container flex flex-col">
           <Statistics data={data} />
         </div>
@@ -103,27 +108,36 @@ const RegistroComponent = () => {
           title={"Comportamiento de la estación seleccionada en los últimos 7 registros"}
           content={
             <div className="container flex flex-col space-y-4">
-                <GraphsCard
-                  graphs_data={
-                    [
-                      { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.temperatura_maxima), titulo: 'Máxima' },
-                      { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.temperatura_minima), titulo: 'Mínima' },
-                      { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.temperatura_media), titulo: 'Media' },
-                    ]
-                  }
-                  title = "Temperatura (°C)"
-                />
-                <GraphsCard
-                  graphs_data={
-                    [
-                      { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.humedad_maxima), titulo: 'Máxima' },
-                      { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.humedad_minima), titulo: 'Mínima' },
-                      { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.humedad_media), titulo: 'Media' },
-                      { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.horas_hr_mayor_que_90), titulo: 'Horas con más del 90%'},
-                    ]
-                  }
-                  title = "Humedad relativa (%)"
-                />
+              <GraphsCard
+                graphs_data={
+                  [
+                    { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.temperatura_maxima), titulo: 'Máxima' },
+                    { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.temperatura_minima), titulo: 'Mínima' },
+                    { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.temperatura_media), titulo: 'Media' },
+                  ]
+                }
+                title="Temperatura (°C)"
+              />
+              <GraphsCard
+                graphs_data={
+                  [
+                    { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.humedad_maxima), titulo: 'Máxima' },
+                    { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.humedad_minima), titulo: 'Mínima' },
+                    { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.humedad_media), titulo: 'Media' },
+                    { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.horas_hr_mayor_que_90), titulo: 'Horas con más del 90%' },
+                  ]
+                }
+                title="Humedad relativa (%)"
+              />
+              <GraphsCard
+                graphs_data={
+                  [
+                    { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.precipitacion), titulo: 'Precipitación mm' },
+                    { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.velocidad_del_viento), titulo: 'Velocidad del viento m/s' },
+                  ]
+                }
+                title="Precipitación y velocidad del viento"
+              />
             </div>
           }
         />
