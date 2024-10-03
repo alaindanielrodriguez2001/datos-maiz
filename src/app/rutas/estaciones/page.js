@@ -26,31 +26,33 @@ const Estaciones = () => {
     }, [ruta]);
 
     return (
-        <div>
-            <main className="relative overflow-x-clip scroll-mx-0 px-10 text-maiz">
+        <div className="container mx-auto px-4">
+            <main className="relative overflow-x-clip scroll-mx-0 text-maiz">
                 <PageHeader
                     title={<>Estaciones meteorológicas</>}
                     content={<>En la tabla siguiente puede acceder a los datos de las estaciones meteorológicas relevantes.</>}
                 />
-                <Table
-                    className="px-4"
-                    data={data}
-                    columns={columns}
-                    formattedColumns={formattedColumns}
-                    deleteUrl={'estacion'}
-                    onFetchData={fetchDataAsync}
-                    compositeHeader={false}
-                />
-                <InputForm
-                    formFields={[
-                        { name: 'codigo', type: 'text', placeholder: 'Código' },
-                        { name: 'nombre', type: 'text', placeholder: 'Nombre' },
-                        { name: 'municipio', type: 'text', placeholder: 'Municipio' },
-                    ]}
-                    postUrl={'estaciones/'}
-                    buttonText="Registrar nueva estación"
-                    onFormSubmit={fetchDataAsync}
-                />
+                <div className="max-w-full">
+                    <Table
+                        className="w-full"
+                        data={data}
+                        columns={columns}
+                        formattedColumns={formattedColumns}
+                        deleteUrl={'estacion'}
+                        onFetchData={fetchDataAsync}
+                        compositeHeader={false}
+                    />
+                    <InputForm
+                        formFields={[
+                            { name: 'codigo', type: 'text', placeholder: 'Código' },
+                            { name: 'nombre', type: 'text', placeholder: 'Nombre' },
+                            { name: 'municipio', type: 'text', placeholder: 'Municipio' },
+                        ]}
+                        postUrl={'estaciones/'}
+                        buttonText="Registrar nueva estación"
+                        onFormSubmit={fetchDataAsync}
+                    />
+                </div>
             </main>
         </div>
     );

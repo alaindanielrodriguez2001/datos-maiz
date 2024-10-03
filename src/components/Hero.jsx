@@ -18,11 +18,6 @@ const Hero = () => {
                             <span className="italic"> (Zea mays, L.) </span> sobre la base de observaciones
                             meteorológicas.</p>
                         <br />
-                        <p>Esta enfermedad está distribuida en Costa Rica, Cuba, República Dominicana, El Salvador, Guatemala, Haití, Honduras,
-                            México, Nicaragua, Panamá, Puerto Rico, Trinidad y Tobago, Islas Vírgenes de los Estados Unidos
-                            de Norteamérica , Bolivia, Colombia, Ecuador, Perú y Venezuela, ocasionando
-                            pérdidas en el rendimiento agrícola del cultivo.</p>
-                        <br />
                         <p>Los resultados del sistema de pronóstico contribuyen al uso racional y eficiente
                             de los medios fitosanitarios en la agricultura cubana, en empresas agrícolas y
                             diferentes formas productivas de nuestra agricultura. </p>
