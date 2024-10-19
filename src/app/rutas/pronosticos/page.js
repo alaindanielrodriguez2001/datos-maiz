@@ -7,7 +7,7 @@ import { fetchData } from '@/services/api';
 
 const Pronostico = () => {
     const [data, setData] = useState([])
-    const columns = ['unidad', 'fecha_de_siembra', 'denominacion_del_cultivar', 'periodo_favorable', 'plazo_primeros_sintomas', 'tipo_de_mensaje', 'total_grados_dias']
+    const columns = ['unidad_nombre', 'fecha_de_siembra', 'denominacion_del_cultivar', 'periodo_favorable', 'plazo_primeros_sintomas', 'tipo_de_mensaje', 'total_grados_dias']
     const formattedColumns = [
         { title: 'Entidad productiva' },
         { title: 'Fecha de siembra' },

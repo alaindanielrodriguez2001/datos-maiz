@@ -26,7 +26,6 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compos
 
                     onFetchData();
                     setSelectedId(null);
-                    window.alert("La fila fue eliminada.");
                 } catch (error) {
                     window.alert("Usted necesita autenticarse para modificar la información guardada en el sistema");
                     console.log(error);
@@ -52,32 +51,42 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compos
                                 <tr>
                                     {formattedColumns.map((column) => (
                                         column.subColumns ? column.subColumns.map((subColumn) => (
-                                            <th key={subColumn} className="border-r-2 border-l-2 border-maiz-dark p-2">{subColumn}</th>
+                                            <th
+                                                key={subColumn}
+                                                className="border-r-2 border-l-2 border-maiz-dark p-2">
+                                                {subColumn}
+                                            </th>
                                         )) : <th key={column.title} className="border-r-2 border-l-2 border-maiz-dark p-2"></th>
                                     ))}
                                 </tr>
                             )}
                         </thead>
-                        <tbody>
-                            {data.map((row) => (
-                                <tr
-                                    key={row.id}
-                                    onClick={() => handleRowClick(row.id)}
-                                    className={selectedId === row.id ? 'bg-gray-200' : ''}
-                                >
-                                    {columns.map((column) => (
-                                        <td key={column} className="border-l-2 border-r-2 border-maiz p-2">
-                                            {row[column] === true || row[column] === false ? (row[column] ? 'Sí' : 'No') : row[column]}
-                                        </td>
+                        {data &&
+                            (
+                                <tbody>
+                                    {data.map((row) => (
+                                        <tr
+                                            key={row.id}
+                                            onClick={() => handleRowClick(row.id)}
+                                            className={selectedId === row.id ? 'bg-gray-200' : ''}
+                                        >
+                                            {columns.map((column) => (
+                                                <td
+                                                    key={column}
+                                                    className={`border-r-2 border-l-2 border-maiz-dark p-2 ${row[column] == "Peligro máximo" ? "text-red-500 font-black" : row[column]=="Alerta"? "text-yellow-950 font-black": ""}`}>
+                                                        {row[column] === true || row[column] === false ? (row[column] ? 'Sí' : 'No') : row[column]}
+                                                </td>
+                                            ))}
+                                        </tr>
                                     ))}
-                                </tr>
-                            ))}
-                        </tbody>
+                                </tbody>
+                            )
+                        }
                     </table>
                 </div>
 
 
-                {data.length == 0 &&
+                {data && data.length == 0 &&
                     (<div className="w-full border-collapse border border-maiz-dark">
                         <div className="items-center justify-center text-center p-2 text-xl w-full">
                             No hay datos aún

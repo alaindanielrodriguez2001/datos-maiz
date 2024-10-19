@@ -12,6 +12,7 @@ const RegistroComponent = () => {
   const [estacionSeleccionada, setEstacionSeleccionada] = useState(0);
   const [yearSeleccionado, setYearSeleccionado] = useState(new Date().getFullYear());
   const [data, setData] = useState([]);
+  const [lastWeekData, setLastWeekData] = useState(data.slice(0, 7).reverse());
 
   const formattedColumns = [
     { title: 'Estación' },
@@ -46,6 +47,7 @@ const RegistroComponent = () => {
       const result = await fetchData(rutaRegistrosEstacionSeleccionada);
       const filteredData = result.filter(item => new Date(item.fecha).getFullYear() === yearSeleccionado);
       setData(filteredData);
+      setLastWeekData(data.slice(0, 7).reverse());
     };
     fetchDataAsync();
   }, [estacionSeleccionada, yearSeleccionado]);
@@ -67,6 +69,7 @@ const RegistroComponent = () => {
           const result = await fetchData(rutaRegistrosEstacionSeleccionada);
           const filteredData = result.filter(item => new Date(item.fecha).getFullYear() === yearSeleccionado);
           setData(filteredData);
+          setLastWeekData(data.slice(0, 7).reverse());
         }}
         compositeHeader={true}
       />
@@ -97,6 +100,7 @@ const RegistroComponent = () => {
           const result = await fetchData(rutaRegistrosEstacionSeleccionada);
           const filteredData = result.filter(item => new Date(item.fecha).getFullYear() === yearSeleccionado);
           setData(filteredData);
+          setLastWeekData(data.slice(0, 7).reverse());
         }}
       />
 
@@ -105,15 +109,15 @@ const RegistroComponent = () => {
           <Statistics data={data} />
         </div>
         <Seccion
-          title={"Comportamiento de la estación seleccionada en los últimos 7 registros"}
+          title={"Comportamiento de la estación seleccionada en los últimos 7 días"}
           content={
             <div className="container flex flex-col space-y-4">
               <GraphsCard
                 graphs_data={
                   [
-                    { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.temperatura_maxima), titulo: 'Máxima' },
-                    { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.temperatura_minima), titulo: 'Mínima' },
-                    { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.temperatura_media), titulo: 'Media' },
+                    { horizontal: lastWeekData.map(item => item.fecha), vertical: lastWeekData.map(item => item.temperatura_maxima), titulo: 'Máxima' },
+                    { horizontal: lastWeekData.map(item => item.fecha), vertical: lastWeekData.map(item => item.temperatura_minima), titulo: 'Mínima' },
+                    { horizontal: lastWeekData.map(item => item.fecha), vertical: lastWeekData.map(item => item.temperatura_media), titulo: 'Media' },
                   ]
                 }
                 title="Temperatura (°C)"
@@ -121,10 +125,10 @@ const RegistroComponent = () => {
               <GraphsCard
                 graphs_data={
                   [
-                    { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.humedad_maxima), titulo: 'Máxima' },
-                    { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.humedad_minima), titulo: 'Mínima' },
-                    { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.humedad_media), titulo: 'Media' },
-                    { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.horas_hr_mayor_que_90), titulo: 'Horas con más del 90%' },
+                    { horizontal: lastWeekData.map(item => item.fecha), vertical: lastWeekData.map(item => item.humedad_maxima), titulo: 'Máxima' },
+                    { horizontal: lastWeekData.map(item => item.fecha), vertical: lastWeekData.map(item => item.humedad_minima), titulo: 'Mínima' },
+                    { horizontal: lastWeekData.map(item => item.fecha), vertical: lastWeekData.map(item => item.humedad_media), titulo: 'Media' },
+                    { horizontal: lastWeekData.map(item => item.fecha), vertical: lastWeekData.map(item => item.horas_hr_mayor_que_90), titulo: 'Horas con más del 90%' },
                   ]
                 }
                 title="Humedad relativa (%)"
@@ -132,8 +136,8 @@ const RegistroComponent = () => {
               <GraphsCard
                 graphs_data={
                   [
-                    { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.precipitacion), titulo: 'Precipitación mm' },
-                    { horizontal: data.slice(-7).map(item => item.fecha), vertical: data.slice(-7).map(item => item.velocidad_del_viento), titulo: 'Velocidad del viento m/s' },
+                    { horizontal: lastWeekData.map(item => item.fecha), vertical: lastWeekData.map(item => item.precipitacion), titulo: 'Precipitación mm' },
+                    { horizontal: lastWeekData.map(item => item.fecha), vertical: lastWeekData.map(item => item.velocidad_del_viento), titulo: 'Velocidad del viento m/s' },
                   ]
                 }
                 title="Precipitación y velocidad del viento"

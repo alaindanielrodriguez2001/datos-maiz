@@ -57,7 +57,6 @@ const InputForm = ({ formFields, fetchUrls = [], postUrl, buttonText, onFormSubm
             setFormData(formFields.reduce((acc, field) => ({ ...acc, [field.name]: field.defaultValue || '' }), {}));
             setShowForm(false);
             onFormSubmit();
-            window.alert("La nueva información fue guardada.");
         } catch (error) {
             if (error.response && error.response.status === 401) {
                 window.alert("Usted necesita autenticarse para modificar la información guardada en el sistema");
