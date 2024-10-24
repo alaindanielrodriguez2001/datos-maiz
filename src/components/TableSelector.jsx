@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchData } from "@/services/api";
 
-const TableSelector = ({ rutaOpciones, onOpcionChange, onYearChange }) => {
+const TableSelector = ({ rutaOpciones, onOpcionChange, onYearChange}) => {
   const [opcionesData, setOpcionesData] = useState([]);
   const [opcionSeleccionada, setOpcionSeleccionada] = useState(0);
   const [yearSeleccionado, setYearSeleccionado] = useState(new Date().getFullYear());

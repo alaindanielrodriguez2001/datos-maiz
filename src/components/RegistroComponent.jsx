@@ -6,13 +6,13 @@ import Statistics from './Statistics';
 import GraphsCard from './GraphsCard';
 import InputForm from './InputForm';
 import Seccion from './Seccion';
-import { fetchData, postData } from '../services/api';
+import { fetchData } from '../services/api';
+import { computeStatistics } from '../services/statistics';
 
 const RegistroComponent = () => {
   const [estacionSeleccionada, setEstacionSeleccionada] = useState(0);
   const [yearSeleccionado, setYearSeleccionado] = useState(new Date().getFullYear());
   const [data, setData] = useState([]);
-  const [lastWeekData, setLastWeekData] = useState(data.slice(0, 7).reverse());
 
   const formattedColumns = [
     { title: 'Estación' },
@@ -47,7 +47,6 @@ const RegistroComponent = () => {
       const result = await fetchData(rutaRegistrosEstacionSeleccionada);
       const filteredData = result.filter(item => new Date(item.fecha).getFullYear() === yearSeleccionado);
       setData(filteredData);
-      setLastWeekData(data.slice(0, 7).reverse());
     };
     fetchDataAsync();
   }, [estacionSeleccionada, yearSeleccionado]);
@@ -69,7 +68,6 @@ const RegistroComponent = () => {
           const result = await fetchData(rutaRegistrosEstacionSeleccionada);
           const filteredData = result.filter(item => new Date(item.fecha).getFullYear() === yearSeleccionado);
           setData(filteredData);
-          setLastWeekData(data.slice(0, 7).reverse());
         }}
         compositeHeader={true}
       />
@@ -100,52 +98,58 @@ const RegistroComponent = () => {
           const result = await fetchData(rutaRegistrosEstacionSeleccionada);
           const filteredData = result.filter(item => new Date(item.fecha).getFullYear() === yearSeleccionado);
           setData(filteredData);
-          setLastWeekData(data.slice(0, 7).reverse());
         }}
       />
 
-      <div className="flex flex-col px-4 text-maiz">
-        <div className="container flex flex-col">
-          <Statistics data={data} />
-        </div>
-        <Seccion
-          title={"Comportamiento de la estación seleccionada en los últimos 7 días"}
-          content={
-            <div className="container flex flex-col space-y-4">
-              <GraphsCard
-                graphs_data={
-                  [
-                    { horizontal: lastWeekData.map(item => item.fecha), vertical: lastWeekData.map(item => item.temperatura_maxima), titulo: 'Máxima' },
-                    { horizontal: lastWeekData.map(item => item.fecha), vertical: lastWeekData.map(item => item.temperatura_minima), titulo: 'Mínima' },
-                    { horizontal: lastWeekData.map(item => item.fecha), vertical: lastWeekData.map(item => item.temperatura_media), titulo: 'Media' },
-                  ]
+      {
+        estacionSeleccionada != 0 && data && data.length > 0 && 
+          (
+            <div className="flex flex-col px-4 text-maiz">
+              <div className="container flex flex-col">
+                <Statistics 
+                  statistics={computeStatistics(data)} 
+                />
+              </div>
+              <Seccion
+                title={"Comportamiento de la estación seleccionada en los últimos 7 días"}
+                content={
+                  <div className="container flex flex-col space-y-4">
+                    <GraphsCard
+                      graphs_data={
+                        [
+                          { horizontal: data.slice(0, 7).reverse().map(item => item.fecha), vertical: data.slice(0, 7).reverse().map(item => item.temperatura_maxima), titulo: 'Máxima' },
+                          { horizontal: data.slice(0, 7).reverse().map(item => item.fecha), vertical: data.slice(0, 7).reverse().map(item => item.temperatura_minima), titulo: 'Mínima' },
+                          { horizontal: data.slice(0, 7).reverse().map(item => item.fecha), vertical: data.slice(0, 7).reverse().map(item => item.temperatura_media), titulo: 'Media' },
+                        ]
+                      }
+                      title="Temperatura (°C)"
+                    />
+                    <GraphsCard
+                      graphs_data={
+                        [
+                          { horizontal: data.slice(0, 7).reverse().map(item => item.fecha), vertical: data.slice(0, 7).reverse().map(item => item.humedad_maxima), titulo: 'Máxima' },
+                          { horizontal: data.slice(0, 7).reverse().map(item => item.fecha), vertical: data.slice(0, 7).reverse().map(item => item.humedad_minima), titulo: 'Mínima' },
+                          { horizontal: data.slice(0, 7).reverse().map(item => item.fecha), vertical: data.slice(0, 7).reverse().map(item => item.humedad_media), titulo: 'Media' },
+                          { horizontal: data.slice(0, 7).reverse().map(item => item.fecha), vertical: data.slice(0, 7).reverse().map(item => item.horas_hr_mayor_que_90), titulo: 'Horas con más del 90%' },
+                        ]
+                      }
+                      title="Humedad relativa (%)"
+                    />
+                    <GraphsCard
+                      graphs_data={
+                        [
+                          { horizontal: data.slice(0, 7).reverse().map(item => item.fecha), vertical: data.slice(0, 7).reverse().map(item => item.precipitacion), titulo: 'Precipitación mm' },
+                          { horizontal: data.slice(0, 7).reverse().map(item => item.fecha), vertical: data.slice(0, 7).reverse().map(item => item.velocidad_del_viento), titulo: 'Velocidad del viento m/s' },
+                        ]
+                      }
+                      title="Precipitación y velocidad del viento"
+                    />
+                  </div>
                 }
-                title="Temperatura (°C)"
-              />
-              <GraphsCard
-                graphs_data={
-                  [
-                    { horizontal: lastWeekData.map(item => item.fecha), vertical: lastWeekData.map(item => item.humedad_maxima), titulo: 'Máxima' },
-                    { horizontal: lastWeekData.map(item => item.fecha), vertical: lastWeekData.map(item => item.humedad_minima), titulo: 'Mínima' },
-                    { horizontal: lastWeekData.map(item => item.fecha), vertical: lastWeekData.map(item => item.humedad_media), titulo: 'Media' },
-                    { horizontal: lastWeekData.map(item => item.fecha), vertical: lastWeekData.map(item => item.horas_hr_mayor_que_90), titulo: 'Horas con más del 90%' },
-                  ]
-                }
-                title="Humedad relativa (%)"
-              />
-              <GraphsCard
-                graphs_data={
-                  [
-                    { horizontal: lastWeekData.map(item => item.fecha), vertical: lastWeekData.map(item => item.precipitacion), titulo: 'Precipitación mm' },
-                    { horizontal: lastWeekData.map(item => item.fecha), vertical: lastWeekData.map(item => item.velocidad_del_viento), titulo: 'Velocidad del viento m/s' },
-                  ]
-                }
-                title="Precipitación y velocidad del viento"
               />
             </div>
-          }
-        />
-      </div>
+          )
+      }
     </div>
   );
 };

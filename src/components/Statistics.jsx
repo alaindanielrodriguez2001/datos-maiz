@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Table from './Table';
 import Seccion from './Seccion';
-import { computeStatistics } from '../services/statistics';
 
-const Statistics = ({ data }) => {
-    const [statistics, setStatistics] = useState([]);
+const Statistics = ({ statistics }) => {
 
     const formattedColumns = [
         { title: 'Medida estadística' },
@@ -30,19 +28,12 @@ const Statistics = ({ data }) => {
         'velocidad_del_viento'
     ]
 
-    useEffect(() => {
-        if (data && data.length > 0) {
-            const stats = computeStatistics(data);
-            setStatistics(stats);
-        }
-    }, [data]);
-
     return (
         <div className="flex flex-col justify-center w-full">
             <Seccion
-                title={"Resumen estadístico de los registros filtrados"}
+                title={"Resumen estadístico de los últimos 7 días de la estación seleccionada"}
                 content={
-                    <div className="w-full overflow-x-auto mt-7 mb-4">
+                    <div className="w-full overflow-x-auto">
                         <Table
                             columns={columns}
                             formattedColumns={formattedColumns}

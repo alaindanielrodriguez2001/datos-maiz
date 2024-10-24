@@ -35,8 +35,8 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compos
     };
 
     return (
-        <div className="table-container w-full overflow-x-auto h-auto mt-7 mb-2">
-            <div className="w-full overflow-x-auto h-auto mt-7 mb-2">
+        <div className="table-container w-full overflow-x-auto h-auto mt-2 mb-2">
+            <div className="w-full overflow-x-auto h-auto mt-2 mb-2">
                 <div className="container border-2 h-auto max-h-[500px] w-full overflow-y-scroll border-maiz-dark">
                     <table className="w-full h-auto table-auto">
                         <thead className="bg-white sticky top-0 ">

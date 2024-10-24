@@ -2,6 +2,8 @@
 import { useSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import { fetchData, postData } from '@/services/api';
+import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from 'react-datepicker';
 import CustomButton from './CustomButton';
 
 const InputForm = ({ formFields, fetchUrls = [], postUrl, buttonText, onFormSubmit }) => {
@@ -11,6 +13,7 @@ const InputForm = ({ formFields, fetchUrls = [], postUrl, buttonText, onFormSubm
     );
     const [options, setOptions] = useState({});
     const { data: session, status } = useSession();
+    const [startDate, setStartDate] = useState(new Date());
 
     useEffect(() => {
         const fetchOptions = async () => {
@@ -40,11 +43,12 @@ const InputForm = ({ formFields, fetchUrls = [], postUrl, buttonText, onFormSubm
 
     const handleDateChange = (e) => {
         const { name, value } = e.target;
+        const formattedDate = value.toISOString().split('T')[0]; 
         setFormData({
             ...formData,
-            [name]: value,
+            [name]: formattedDate,
         });
-    };
+    };    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -84,15 +88,22 @@ const InputForm = ({ formFields, fetchUrls = [], postUrl, buttonText, onFormSubm
                                         name={field.name}
                                         value={formData[field.name]}
                                         onChange={handleChange}
+                                        className="mx-2 px-2 w-[350px]"
                                     >
                                         <option value="">{field.placeholder}</option>
                                         {options[field.name]?.map((option) => (
-                                            <option key={option.id} value={option.id}>{option.nombre}</option>
+                                            <option
+                                                key={option.id}
+                                                value={option.id}
+                                                className="mx-2 px-2 w-[350px]"
+                                            >
+                                                {option.nombre}
+                                            </option>
                                         ))}
                                     </select>
                                 ) : field.type === 'checkbox' ? (
                                     <div className="flex items-center">
-                                        <label className="mr-2">{field.placeholder}</label>
+                                        <label className="ml-2 px-2 w-[350px]">{field.placeholder}</label>
                                         <input
                                             type="checkbox"
                                             name={field.name}
@@ -101,17 +112,30 @@ const InputForm = ({ formFields, fetchUrls = [], postUrl, buttonText, onFormSubm
                                         />
                                     </div>
                                 ) : field.type === 'date' ? (
-                                    <input
-                                        type="text"
-                                        name={field.name}
-                                        placeholder={field.placeholder}
-                                        value={formData[field.name]}
-                                        onFocus={(e) => e.target.type = 'date'}
-                                        onBlur={(e) => {
-                                            if (!e.target.value) e.target.type = 'text';
-                                        }}
-                                        onChange={handleDateChange}
-                                    />
+                                    <>
+                                        <DatePicker
+                                            selected={startDate}
+                                            onChange={(date) => {
+                                                setStartDate(date);
+                                                handleDateChange({
+                                                    target: {
+                                                        name: field.name,
+                                                        value: date,
+                                                    },
+                                                });
+                                            }}
+                                            dateFormat="yyyy/MM/dd"
+                                            placeholderText="yyyy/MM/dd"
+                                            className="mx-2 px-2 w-[350px]"
+                                        />
+                                        <input
+                                            type="hidden"
+                                            name={field.name}
+                                            value={startDate}
+                                            readOnly
+                                        />
+                                    </>
+
                                 ) : (
                                     <input
                                         type={field.type}
@@ -120,6 +144,7 @@ const InputForm = ({ formFields, fetchUrls = [], postUrl, buttonText, onFormSubm
                                         value={formData[field.name]}
                                         onChange={handleChange}
                                         step={field.type === 'number' ? 'any' : undefined}
+                                        className="mx-2 px-2 w-[350px]"
                                     />
                                 )}
                             </div>
