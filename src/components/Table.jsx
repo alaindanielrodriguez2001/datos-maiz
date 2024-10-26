@@ -4,13 +4,14 @@ import { useState } from 'react';
 import { deleteData } from '@/services/api';
 import CustomButton from './CustomButton';
 
-const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compositeHeader }) => {
+const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compositeHeader, onSelectRow }) => {
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
     const [selectedId, setSelectedId] = useState(null);
     const { data: session, status } = useSession();
 
     const handleRowClick = (id) => {
         setSelectedId(id);
+        onSelectRow(id);
     };
 
     const handleDelete = async () => {

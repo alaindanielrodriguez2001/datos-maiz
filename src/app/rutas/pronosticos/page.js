@@ -1,13 +1,25 @@
 'use client'
+
 import React, { useState, useEffect } from 'react';
-import PageHeader from '@/components/PageHeader'
-import Table from '@/components/Table'
+import PageHeader from '@/components/PageHeader';
+import Table from '@/components/Table';
 import Seccion from '@/components/Seccion';
 import { fetchData } from '@/services/api';
+import CopyButton from '@/components/CopyButton';
 
 const Pronostico = () => {
-    const [data, setData] = useState([])
-    const columns = ['unidad_nombre', 'fecha_de_siembra', 'denominacion_del_cultivar', 'periodo_favorable', 'plazo_primeros_sintomas', 'tipo_de_mensaje', 'total_grados_dias']
+    const [data, setData] = useState([]);
+    const [selectedId, setSelectedId] = useState(null);
+
+    const columns = [
+        'unidad_nombre', 
+        'fecha_de_siembra', 
+        'denominacion_del_cultivar', 
+        'periodo_favorable', 
+        'plazo_primeros_sintomas', 
+        'tipo_de_mensaje', 
+        'total_grados_dias'
+    ];
     const formattedColumns = [
         { title: 'Entidad productiva' },
         { title: 'Fecha de siembra' },
@@ -16,9 +28,9 @@ const Pronostico = () => {
         { title: 'Plazo de primeros síntomas' },
         { title: 'Tipo de mensaje' },
         { title: 'Total de grados días (GDD) (°C)' },
-    ]
-    const ruta = 'pronosticos/';
+    ];
 
+    const ruta = 'pronosticos/';
     const fetchDataAsync = async () => {
         const result = await fetchData(ruta);
         setData(result);
@@ -28,7 +40,6 @@ const Pronostico = () => {
         fetchDataAsync();
     }, [ruta]);
 
-
     return (
         <div className="container mx-auto px-4">
             <div className="relative overflow-x-clip scroll-mx-0 px-10 text-maiz">
@@ -36,7 +47,6 @@ const Pronostico = () => {
                     title={<>Pronósticos climáticos de la mancha de asfalto</>}
                     content={<>Aquí puede consultar los pronósticos sobre la incidencia de la enfermedad emitidos por el sistema.</>}
                 />
-
                 <Table
                     className="px-4"
                     deleteUrl={'pronostico'}
@@ -45,8 +55,13 @@ const Pronostico = () => {
                     formattedColumns={formattedColumns}
                     onFetchData={() => fetchDataAsync()}
                     compositeHeader={false}
+                    onSelectRow={setSelectedId} 
                 />
-
+                <CopyButton 
+                    selectedId={selectedId} 
+                    data={data} 
+                    columns={columns} 
+                />
                 <Seccion
                     title={"Metodología del pronóstico"}
                     content={
@@ -80,7 +95,7 @@ const Pronostico = () => {
                 />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Pronostico
+export default Pronostico;
