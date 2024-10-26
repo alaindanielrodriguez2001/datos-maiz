@@ -72,7 +72,7 @@ const Unidades = () => {
                     <InputForm
                         formFields={[
                             { name: 'nombre', type: 'text', placeholder: 'Nombre de la entidad' },
-                            { name: 'estacion_codigo', type: 'select', placeholder: 'Estación' },
+                            { name: 'estacion', type: 'select', placeholder: 'Estación' },
                             { name: 'denominacion_del_cultivar', type: 'text', placeholder: 'Denominación del cultivar' },
                             { name: 'tipo_de_suelo', type: 'text', placeholder: 'Tipo de suelo' },
                             { name: 'fecha_de_siembra', type: 'date', placeholder: 'Fecha de siembra' },
@@ -85,7 +85,7 @@ const Unidades = () => {
 
                         ]}
                         fetchUrls={[
-                            { name: 'estacion_codigo', url: 'estaciones/' },
+                            { name: 'estacion', url: 'estaciones/' },
                         ]}
                         postUrl={'unidades/'}
                         buttonText="Registrar nueva unidad de cultivo"

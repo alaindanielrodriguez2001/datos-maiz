@@ -8,12 +8,12 @@ import CustomButton from './CustomButton';
 
 const InputForm = ({ formFields, fetchUrls = [], postUrl, buttonText, onFormSubmit }) => {
     const [showForm, setShowForm] = useState(false);
+    const [startDate, setStartDate] = useState(new Date());
     const [formData, setFormData] = useState(
-        formFields.reduce((acc, field) => ({ ...acc, [field.name]: field.defaultValue || '' }), {})
+        formFields.reduce((acc, field) => ({ ...acc, [field.name]: field.type === 'checkbox' ? false: '' }), {})
     );
     const [options, setOptions] = useState({});
     const { data: session, status } = useSession();
-    const [startDate, setStartDate] = useState(new Date());
 
     useEffect(() => {
         const fetchOptions = async () => {
@@ -43,7 +43,7 @@ const InputForm = ({ formFields, fetchUrls = [], postUrl, buttonText, onFormSubm
 
     const handleDateChange = (e) => {
         const { name, value } = e.target;
-        const formattedDate = value.toISOString().split('T')[0]; 
+        const formattedDate = value ? value.toISOString().split('T')[0] : ''; 
         setFormData({
             ...formData,
             [name]: formattedDate,
@@ -51,14 +51,14 @@ const InputForm = ({ formFields, fetchUrls = [], postUrl, buttonText, onFormSubm
     };    
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
         try {
+            e.preventDefault();
             await postData(postUrl, formData, {
                 headers: {
                     Authorization: `Bearer ${session.accessToken}`,
                 },
             });
-            setFormData(formFields.reduce((acc, field) => ({ ...acc, [field.name]: field.defaultValue || '' }), {}));
+            setFormData(formFields.reduce((acc, field) => ({ ...acc, [field.name]: field.type === 'checkbox' ? false: ''}), {}));
             setShowForm(false);
             onFormSubmit();
         } catch (error) {
@@ -82,7 +82,10 @@ const InputForm = ({ formFields, fetchUrls = [], postUrl, buttonText, onFormSubm
                 {showForm && (
                     <form className="space-y-3 mb-4" onSubmit={handleSubmit}>
                         {formFields.map((field) => (
-                            <div key={field.name} className="border border-maiz p-2 w-full rounded-xl text-gray-400">
+                            <div 
+                                key={field.name} 
+                                className="border border-maiz p-2 w-full rounded-xl text-gray-400"
+                            >
                                 {field.type === 'select' ? (
                                     <select
                                         name={field.name}
@@ -91,13 +94,13 @@ const InputForm = ({ formFields, fetchUrls = [], postUrl, buttonText, onFormSubm
                                         className="mx-2 px-2 w-[350px]"
                                     >
                                         <option value="">{field.placeholder}</option>
-                                        {options[field.name]?.map((option) => (
+                                        {options[field.name]?.map((opcion) => (
                                             <option
-                                                key={option.id}
-                                                value={option.id}
+                                                key={opcion.id}
+                                                value={opcion.id}
                                                 className="mx-2 px-2 w-[350px]"
                                             >
-                                                {option.nombre}
+                                                {opcion.nombre}
                                             </option>
                                         ))}
                                     </select>
@@ -114,7 +117,7 @@ const InputForm = ({ formFields, fetchUrls = [], postUrl, buttonText, onFormSubm
                                 ) : field.type === 'date' ? (
                                     <>
                                         <DatePicker
-                                            selected={startDate}
+                                            selected={formData[field.name] ? startDate : null}
                                             onChange={(date) => {
                                                 setStartDate(date);
                                                 handleDateChange({
@@ -125,8 +128,9 @@ const InputForm = ({ formFields, fetchUrls = [], postUrl, buttonText, onFormSubm
                                                 });
                                             }}
                                             dateFormat="yyyy/MM/dd"
-                                            placeholderText="yyyy/MM/dd"
+                                            placeholderText="Fecha"
                                             className="mx-2 px-2 w-[350px]"
+                                            
                                         />
                                         <input
                                             type="hidden"
