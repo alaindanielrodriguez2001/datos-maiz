@@ -13,7 +13,7 @@ export const postData = async (ruta, data, authToken) => {
 };
 
 export const deleteData = async (ruta, authToken) => {
-    await axios.delete(`${API_URL}/${ruta}`, authToken);
+    const response = await axios.delete(`${API_URL}/${ruta}`, authToken);
     return response;
 };
 

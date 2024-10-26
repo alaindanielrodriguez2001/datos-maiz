@@ -5,6 +5,7 @@ import { deleteData } from '@/services/api';
 import CustomButton from './CustomButton';
 
 const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compositeHeader }) => {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
     const [selectedId, setSelectedId] = useState(null);
     const { data: session, status } = useSession();
 
@@ -17,22 +18,28 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compos
             const confirmDelete = window.confirm('¿Está seguro de que desea eliminar esta fila?');
             if (confirmDelete) {
                 try {
-
-                    await deleteData(`${deleteUrl}/${selectedId}`, {
+                    const response = await fetch(`${API_URL}/${deleteUrl}/${selectedId}`, {
+                        method: 'DELETE',
                         headers: {
                             Authorization: `Bearer ${session.accessToken}`,
                         },
                     });
-
-                    onFetchData();
-                    setSelectedId(null);
+                    if (response.status === 401) {
+                        window.alert("Usted necesita autenticarse para modificar la información guardada en el sistema.");
+                    }else if (response.status === 422) {
+                        window.alert("Un pronóstico no puede ser borrado mientras sea relevante. La unidad de cultivo asociada tiene más de 4 días críticos.");
+                    } else if (response.ok) {
+                        onFetchData();
+                        setSelectedId(null);
+                    } 
                 } catch (error) {
-                    window.alert("Usted necesita autenticarse para modificar la información guardada en el sistema");
+                    window.alert("Error al eliminar la fila.");
                     console.log(error);
                 }
             }
         }
     };
+    
 
     return (
         <div className="table-container w-full overflow-x-auto h-auto mt-2 mb-2">
