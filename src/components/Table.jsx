@@ -1,7 +1,6 @@
 'use client'
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
-import { deleteData } from '@/services/api';
 import CustomButton from './CustomButton';
 
 const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compositeHeader, onSelectRow }) => {
@@ -102,7 +101,6 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compos
                     </div>
                     )
                 }
-
 
                 {selectedId && (
                     <div className="mt-3 w-full">

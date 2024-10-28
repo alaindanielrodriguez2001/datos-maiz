@@ -5,7 +5,7 @@ import PageHeader from '@/components/PageHeader';
 import Table from '@/components/Table';
 import Seccion from '@/components/Seccion';
 import { fetchData } from '@/services/api';
-import CopyButton from '@/components/CopyButton';
+import CustomButton from '@/components/CustomButton';
 
 const Pronostico = () => {
     const [data, setData] = useState([]);
@@ -36,6 +36,23 @@ const Pronostico = () => {
         setData(result);
     };
 
+    const handleCopy = () => {
+        if (selectedId) {
+            const selectedRow = data.find(row => row.id === selectedId);
+            const texto = `AVISO \n En la entidad productiva  ${selectedRow['unidad_nombre']}, sembrada en la fecha ${selectedRow['fecha_de_siembra']}, con denominación del cultivar ${selectedRow['denominacion_del_cultivar']}, el período ${selectedRow['periodo_favorable']} fue favorable a que en el plazo ${selectedRow['plazo_primeros_sintomas']} aparezcan los primeros síntomas de la enfermedad. Este es un mensaje de tipo ${selectedRow['tipo_de_mensaje']}. El total de grados días de la unidad de cultivo es ${selectedRow['total_grados_dias']}`;
+            navigator.clipboard.writeText(texto)
+                .then(() => {
+                    window.alert("Pronóstico copiado al portapapeles.");
+                })
+                .catch(err => {
+                    window.alert("Error al copiar datos al portapapeles.");
+                    console.error('Error copying text: ', err);
+                });
+        } else {
+            window.alert("Seleccione una fila para copiar sus datos.");
+        }
+    };
+
     useEffect(() => {
         fetchDataAsync();
     }, [ruta]);
@@ -57,11 +74,16 @@ const Pronostico = () => {
                     compositeHeader={false}
                     onSelectRow={setSelectedId} 
                 />
-                <CopyButton 
-                    selectedId={selectedId} 
-                    data={data} 
-                    columns={columns} 
-                />
+                {selectedId && (
+                    <div className="mt-3 w-full">
+                        <CustomButton
+                            onClick={handleCopy}
+                            is_disabled={!selectedId}
+                            customStyle={"w-full"}
+                            content="Copiar pronóstico"
+                        />
+                    </div>
+                )}
                 <Seccion
                     title={"Metodología del pronóstico"}
                     content={
