@@ -10,7 +10,9 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compos
 
     const handleRowClick = (id) => {
         setSelectedId(id);
-        onSelectRow(id);
+        if (onSelectRow){
+            onSelectRow(id);
+        }
     };
 
     const handleDelete = async () => {
@@ -33,7 +35,7 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compos
                         setSelectedId(null);
                     } 
                 } catch (error) {
-                    window.alert("Error al eliminar la fila.");
+                    window.alert("No tiene permiso para modificar la información. Verifique que se encuentra autenticado.");
                     console.log(error);
                 }
             }

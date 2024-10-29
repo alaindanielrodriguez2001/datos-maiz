@@ -128,7 +128,7 @@ const InputForm = ({ formFields, fetchUrls = [], postUrl, buttonText, onFormSubm
                                                 });
                                             }}
                                             dateFormat="yyyy/MM/dd"
-                                            placeholderText="Fecha"
+                                            placeholderText={field.placeholder}
                                             className="mx-2 px-2 w-[350px]"
                                             
                                         />
