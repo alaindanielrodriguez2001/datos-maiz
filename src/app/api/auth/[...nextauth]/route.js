@@ -1,4 +1,3 @@
-// Configuración de autenticación
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import axios from 'axios';
@@ -9,7 +8,6 @@ const refreshAccessToken = async (token) => {
       refresh: token.refreshToken,
     });
     const refreshedTokens = response.data;
-
     return {
       ...token,
       accessToken: refreshedTokens.access,
@@ -59,11 +57,9 @@ const handler = NextAuth({
         token.refreshToken = user.data.refresh;
         token.accessTokenExpires = Date.now() + user.data.expires_in * 1000;
       }
-
       if (Date.now() < token.accessTokenExpires) {
         return token;
       }
-
       return refreshAccessToken(token);
     },
     async session({ session, token }) {
@@ -71,7 +67,7 @@ const handler = NextAuth({
       session.error = token.error;
       return session;
     }
-  }
+  },
 });
 
 export { handler as GET, handler as POST };
