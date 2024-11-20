@@ -11,7 +11,7 @@ const refreshAccessToken = async (token) => {
     return {
       ...token,
       accessToken: refreshedTokens.access,
-      accessTokenExpires: Date.now() + refreshedTokens.expires_in * 1000,
+      accessTokenExpires: Date.now() + 15 * 60 * 1000,  // Ajusta el tiempo de vida del token de acceso
       refreshToken: refreshedTokens.refresh || token.refreshToken,
     };
   } catch (error) {
@@ -55,7 +55,7 @@ const handler = NextAuth({
       if (user) {
         token.accessToken = user.data.access;
         token.refreshToken = user.data.refresh;
-        token.accessTokenExpires = Date.now() + user.data.expires_in * 1000;
+        token.accessTokenExpires = Date.now() + 15 * 60 * 1000; 
       }
       if (Date.now() < token.accessTokenExpires) {
         return token;
