@@ -72,7 +72,7 @@ const Table = ({ columns, formattedColumns, data, deleteUrl, onFetchData, compos
                         </thead>
                         {data &&
                             (
-                                <tbody>
+                                <tbody className = "text-gray-600">
                                     {data.map((row) => (
                                         <tr
                                             key={row.id}

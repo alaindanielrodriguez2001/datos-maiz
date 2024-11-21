@@ -21,7 +21,7 @@ const InfoCard = ({ imagesrc, title, text }) => {
                     </div>
                 )}
 
-                <div className="text-center items-center text-maiz text-lg md:text-2xl">
+                <div className="text-center items-center text-gray-500 text-lg md:text-2xl">
                     <div>
                         {text}
                     </div>

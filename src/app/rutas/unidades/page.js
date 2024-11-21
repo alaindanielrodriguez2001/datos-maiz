@@ -51,9 +51,8 @@ const Unidades = () => {
     }, [ruta]);
 
     return (
-        <div className="container mx-auto px-4">
             <div>
-                <main className="relative overflow-x-clip scroll-mx-0 px-10 text-maiz">
+                <main className="relative overflow-x-clip scroll-mx-0 px-4 text-maiz">
                     <PageHeader
                         title={<>Unidades de cultivo</>}
                         content={<>En la tabla siguiente puede acceder a los datos de las unidades de cultivo de las diferentes entidades productivas
@@ -61,7 +60,6 @@ const Unidades = () => {
                         </>}
                     />
                     <Table
-                        className="px-4"
                         data={data}
                         columns={columns}
                         formattedColumns={formattedColumns}
@@ -93,7 +91,6 @@ const Unidades = () => {
                     />
                 </main>
             </div>
-        </div>
     );
 };
 

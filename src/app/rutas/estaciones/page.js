@@ -46,11 +46,14 @@ const Estaciones = () => {
                         formFields={[
                             { name: 'codigo', type: 'text', placeholder: 'Código' },
                             { name: 'nombre', type: 'text', placeholder: 'Nombre' },
-                            { name: 'municipio', type: 'text', placeholder: 'Municipio' },
+                            { name: 'municipio', type: 'municipio', placeholder: 'Municipio' },
                         ]}
                         postUrl={'estaciones/'}
                         buttonText="Registrar nueva estación"
                         onFormSubmit={fetchDataAsync}
+                        municipios={
+                            ["Caibarién", "Camajuaní", "Cifuentes", "Corralillo", "Encrucijada", "Manicaragua", "Placetas", "Quemado de Güines", "Ranchuelo", "Remedios", "Sagua La Grande", "Santa Clara", "Santo Domingo"]
+                        }
                     />
                 </div>
             </main>

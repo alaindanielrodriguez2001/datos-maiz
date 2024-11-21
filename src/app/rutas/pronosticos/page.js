@@ -88,7 +88,7 @@ const Pronostico = () => {
                     title={"Metodología del pronóstico"}
                     content={
                         <>
-                            <p className="text-xl text-justify mx-5 px-5">
+                            <p className="text-xl text-gray-500 text-justify mx-5 px-5">
                                 A partir del día de siembra se comienza el cálculo diario
                                 de la suma térmica. Cuando el acumulado alcance 700 °C,
                                 se comienza a tomar un período de 7 días. Si en esos días

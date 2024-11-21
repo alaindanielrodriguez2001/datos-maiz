@@ -19,7 +19,7 @@ const PageHeader = ({ title, imagesrc, content }) => {
                 </div>
                 )}
 
-                <div className="text-2xl text-center text-maiz">
+                <div className="text-2xl text-center text-gray-500">
                     {content}
                 </div>
             </div>
